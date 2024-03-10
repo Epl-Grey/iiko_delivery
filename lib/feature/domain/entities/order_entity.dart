@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-class OrderEntity extends Equatable {
+class OrderEntity {
   final int id;
   final String orderNumber;
   final String address;
@@ -8,27 +6,16 @@ class OrderEntity extends Equatable {
   final bool isDelivered;
   final String clientPhone;
   final String clientName;
-  final DateTime orderDate;
-
-  const OrderEntity(
-      {required this.id,
-      required this.orderNumber,
-      required this.address,
-      required this.cost,
-      required this.isDelivered,
-      required this.clientPhone,
-      required this.clientName,
-      required this.orderDate});
-
-  @override
-  List<Object?> get props => [
-        id,
-        orderNumber,
-        address,
-        cost,
-        isDelivered,
-        clientPhone,
-        clientName,
-        orderDate,
-      ];
+  final String orderDate;
+  
+  const OrderEntity({
+    required this.id,
+    required this.orderNumber,
+    required this.address,
+    required this.cost,
+    required this.isDelivered,
+    required this.clientPhone,
+    required this.clientName,
+    required this.orderDate,
+  });
 }

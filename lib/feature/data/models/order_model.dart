@@ -12,16 +12,16 @@ class OrderModel extends OrderEntity {
     required super.orderDate,
   });
 
-  factory OrderModel.fromJson(Map<String, dynamic> json) {
+  factory OrderModel.fromJson(Map<String, dynamic> map) {
     return OrderModel(
-      id: json['id'],
-      orderNumber: json['order_number'],
-      address: json['address'],
-      cost: json['cost'],
-      isDelivered: json['is_delivered'],
-      clientPhone: json['client_phone'],
-      clientName: json['client_name'],
-      orderDate: json['order_date'],
+      id: map['id'] as int,
+      orderNumber: map['order_number'] as String,
+      address: map['address'] as String,
+      cost: map['cost'] as int,
+      isDelivered: map['is_delivered'] as bool, 
+      clientPhone: map['client_phone'] as String,
+      clientName: map['client_name'] as String,
+      orderDate: map['order_date'] as String,
     );
   }
 
@@ -37,4 +37,7 @@ class OrderModel extends OrderEntity {
       'orderDate': orderDate,
     };
   }
+
+
+
 }

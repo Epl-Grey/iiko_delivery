@@ -1,3 +1,4 @@
+
 import 'package:iiko_delivery/feature/data/models/order_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -6,16 +7,14 @@ abstract class OrderRemoteDataSource {
 }
 
 class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
-  final Future<Supabase> supabaseClient;
+  // ignore: prefer_typing_uninitialized_variables
+  final SupabaseClient supabaseClient;
 
-  OrderRemoteDataSourceImpl({required this.supabaseClient});
+  OrderRemoteDataSourceImpl(this.supabaseClient);
 
   @override
   Future<List<OrderModel>> getUserOrders() async {
-  final response = Supabase.instance.client
-      .from('Order')
-      .select();
-      
-  return response as Future<List<OrderModel>>;
+    final data = await supabaseClient.from('Orders').select();
+    return data.map((order) => OrderModel.fromJson(order)).toList();
   }
 }
