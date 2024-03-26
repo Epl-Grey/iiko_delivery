@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iiko_delivery/feature/orders/presentation/bloc/item_cubit/item_cubit.dart';
 import 'package:iiko_delivery/feature/orders/presentation/bloc/order_cubit/order_cubit.dart';
@@ -44,9 +45,19 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        theme: ThemeData.dark().copyWith(
-          backgroundColor: Colors.white,
-          scaffoldBackgroundColor: Colors.white,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          inputDecorationTheme: InputDecorationTheme(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 2, color: Color(0xFF78C4A4)),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 2, color: Color(0xFF78C4A4)),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
         ),
         home: const SplashPage(),
         routes: {
