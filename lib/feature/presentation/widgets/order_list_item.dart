@@ -20,7 +20,6 @@ class _OrderListItemState extends State<OrderListItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pop(context);
         Navigator.pushNamed(context, "/orders/detail", arguments: widget.orderModel);
       },
       child: AnimatedSize(
