@@ -12,9 +12,9 @@ class UserRepositoryImpl extends UserRepository {
   });
 
   @override
-  Future<Either<Failure, AuthResponse>> signIn(String phone, String password) async{
+  Future<Either<Failure, AuthResponse>> signIn(String email, String password) async{
     try {
-          final respone = await userRemoteDataSources.signInUser(phone, password);
+          final respone = await userRemoteDataSources.signInUser(email, password);
     return Right(respone);
     } on ServerFailure catch(error) {
       return Left(ServerFailure(message: error.message));
