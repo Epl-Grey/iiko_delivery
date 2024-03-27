@@ -8,6 +8,7 @@ import 'package:iiko_delivery/feature/domain/repositories/item_repository.dart';
 import 'package:iiko_delivery/feature/domain/repositories/order_repository.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_order_items.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_user_orders.dart';
+import 'package:iiko_delivery/feature/domain/usecases/set_order_is_delivered.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
 
@@ -27,12 +28,15 @@ Future<void> init() async {
   sl.registerFactory<OrderCubit>(() => OrderCubit(sl()));
   sl.registerFactory<SignInUserCubit>(() => SignInUserCubit(signInUser: sl()));
   sl.registerFactory<ItemCubit>(() => ItemCubit(sl()));
+  
   // UseCases
   sl.registerLazySingleton<GetUserOrders>(
       () => GetUserOrders(orderRepository: sl()));
   sl.registerLazySingleton<SignInUser>(() => SignInUser(userRepository: sl()));
   sl.registerLazySingleton<GetOrderItems>(
       () => GetOrderItems(orderRepository: sl()));
+  sl.registerLazySingleton<SetOrderIsDelivered>(() => SetOrderIsDelivered(orderRepository: sl()));
+
   // Repository
   sl.registerLazySingleton<OrderRepository>(
       () => OrderRepositoryImpl(remoteDataSource: sl()));

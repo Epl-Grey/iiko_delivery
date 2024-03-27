@@ -23,5 +23,16 @@ class OrderRepositoryImpl implements OrderRepository {
       return Left(ServerFailure(message: error.toString()));
     }
   }
-
+  
+  @override
+  Future<Either<ServerFailure, void>> setOrderIsDelivered(int id, bool isDelivered) async {
+    try{
+      final response = await remoteDataSource.setOrderIsDelivered(id, isDelivered);
+      return Right(response);
+    }on ServerException catch(error){
+      return Left(ServerFailure(message: error.message));
+    }catch(error){
+      return Left(ServerFailure(message: error.toString()));
+    }
+  }
 }
