@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iiko_delivery/feature/orders/presentation/bloc/item_cubit/item_cubit.dart';
-import 'package:iiko_delivery/feature/orders/presentation/bloc/order_cubit/order_cubit.dart';
-import 'package:iiko_delivery/feature/orders/presentation/pages/order_detail_screen.dart';
-import 'package:iiko_delivery/feature/orders/presentation/pages/order_screen.dart';
-import 'package:iiko_delivery/feature/users/presentation/bloc/sign_in_cubit.dart';
-import 'package:iiko_delivery/feature/users/presentation/pages/sign_in_user.dart';
-import 'package:iiko_delivery/feature/users/presentation/pages/splash_screen_page.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/pages/order_detail_screen.dart';
+import 'package:iiko_delivery/feature/presentation/pages/order_screen.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/pages/sign_in_user.dart';
+import 'package:iiko_delivery/feature/presentation/pages/splash_screen_page.dart';
 
 import 'package:iiko_delivery/locator_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

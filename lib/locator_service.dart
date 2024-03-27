@@ -1,21 +1,21 @@
 import 'package:get_it/get_it.dart';
 import 'package:iiko_delivery/core/platform/network_info.dart';
-import 'package:iiko_delivery/feature/orders/data/datasources/item_remote_data_source.dart';
-import 'package:iiko_delivery/feature/orders/data/datasources/order_remote_data_source.dart';
-import 'package:iiko_delivery/feature/orders/data/repositories/item_repository_impl.dart';
-import 'package:iiko_delivery/feature/orders/data/repositories/order_repository_impl.dart';
-import 'package:iiko_delivery/feature/orders/domain/repositories/item_repository.dart';
-import 'package:iiko_delivery/feature/orders/domain/repositories/order_repository.dart';
-import 'package:iiko_delivery/feature/orders/domain/usecases/get_order_items.dart';
-import 'package:iiko_delivery/feature/orders/domain/usecases/get_user_orders.dart';
-import 'package:iiko_delivery/feature/orders/presentation/bloc/item_cubit/item_cubit.dart';
-import 'package:iiko_delivery/feature/orders/presentation/bloc/order_cubit/order_cubit.dart';
+import 'package:iiko_delivery/feature/data/datasources/item_remote_data_source.dart';
+import 'package:iiko_delivery/feature/data/datasources/order_remote_data_source.dart';
+import 'package:iiko_delivery/feature/data/repositories/item_repository_impl.dart';
+import 'package:iiko_delivery/feature/data/repositories/order_repository_impl.dart';
+import 'package:iiko_delivery/feature/domain/repositories/item_repository.dart';
+import 'package:iiko_delivery/feature/domain/repositories/order_repository.dart';
+import 'package:iiko_delivery/feature/domain/usecases/get_order_items.dart';
+import 'package:iiko_delivery/feature/domain/usecases/get_user_orders.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
 
-import 'package:iiko_delivery/feature/users/data/datasources/user_remote_data_source.dart';
-import 'package:iiko_delivery/feature/users/data/repositories/user_repository_impl.dart';
-import 'package:iiko_delivery/feature/users/domain/repositories/user_repository.dart';
-import 'package:iiko_delivery/feature/users/domain/usecases/sign_in_user.dart';
-import 'package:iiko_delivery/feature/users/presentation/bloc/sign_in_cubit.dart';
+import 'package:iiko_delivery/feature/data/datasources/user_remote_data_source.dart';
+import 'package:iiko_delivery/feature/data/repositories/user_repository_impl.dart';
+import 'package:iiko_delivery/feature/domain/repositories/user_repository.dart';
+import 'package:iiko_delivery/feature/domain/usecases/sign_in_user.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_cubit.dart';
 
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
