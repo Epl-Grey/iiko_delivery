@@ -1,4 +1,7 @@
-class OrderEntity {
+import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
+
+class OrderEntity extends Equatable{
   final int id;
   final String orderNumber;
   final String address;
@@ -18,4 +21,7 @@ class OrderEntity {
     required this.clientName,
     required this.orderDate,
   });
+
+  @override
+  get props => [id, orderNumber, address, cost, isDelivered, clientPhone, clientName, orderDate];
 }

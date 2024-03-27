@@ -1,4 +1,6 @@
-class ItemEntity {
+import 'package:equatable/equatable.dart';
+
+class ItemEntity extends Equatable{
   final int id;
   final int orderId;
   final String name;
@@ -12,4 +14,7 @@ class ItemEntity {
     required this.count,
     required this.cost,
   });
+  
+  @override
+  get props => [id, orderId, name, count, cost];
 }
