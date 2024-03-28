@@ -72,6 +72,7 @@ flutter:
   assets:
    - assets/ketchup.png
    - assets/autho.png
+   - assets/Wallet.png
 
   fonts:
     - family: Nunito
