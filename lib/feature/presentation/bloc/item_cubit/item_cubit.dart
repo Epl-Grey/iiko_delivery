@@ -10,7 +10,7 @@ class ItemCubit extends Cubit<ItemState> {
     this.getOrderItemsUseCase,
   ) : super(ItemInitial());
 
-  getUserOrders(int userId) async {
+  getOrderItems(int userId) async {
     emit(ItemLoadingState());
 
     final response = await getOrderItemsUseCase(ItemParams(userId: userId));

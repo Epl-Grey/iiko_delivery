@@ -42,9 +42,7 @@ class _OrderListItemState extends State<OrderListItem> {
                   child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '№ ${widget.orderModel.orderNumber}',
-                  ),
+                  Text('№ ${widget.orderModel.orderNumber}'),
                   Text(widget.orderModel.cost.toString())
                 ],
               )),

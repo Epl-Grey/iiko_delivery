@@ -4,15 +4,15 @@ import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_
 
 
 class LocationCubit extends Cubit<LocationState> {
-  final GetPhoneLocation getPhoneLocation;
+  final GetPhoneLocation getPhoneLocationUsecase;
   LocationCubit(
-    this.getPhoneLocation,
+    this.getPhoneLocationUsecase,
   ) : super(LocationInitial());
 
-  getUserOrders() async {
+  getPhoneLocation(String address) async {
     emit(LocationLoadingState());
 
-    final response = await getPhoneLocation();
+    final response = await getPhoneLocationUsecase(LocationParams(address: address));
 
     response.fold((fail) => emit(GetLocationFailState(message: fail.toString())),
         (success) => emit(GetLocationSuccessState(position: success)));
