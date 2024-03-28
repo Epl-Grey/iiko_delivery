@@ -6,7 +6,7 @@ import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_st
 class SignInUserCubit extends Cubit<SignInUserState> {
   final SignInUser signInUser;
 
-  SignInUserCubit({required this.signInUser}) : super(SignInUserEmpty());
+  SignInUserCubit({required this.signInUser}) : super(SignInUserInnitial());
 
   auth(String email, String password) async {
     emit(SignInUserStart());
@@ -19,7 +19,7 @@ class SignInUserCubit extends Cubit<SignInUserState> {
 
   String mapFailureFromMessage(Failure failure) {
     switch (failure.runtimeType) {
-      case ServerFailure _:
+      case ServerFailure:
         return "ServerFailure";
       default:
         return "Unexpected error";
