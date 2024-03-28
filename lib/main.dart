@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/pages/order_detail_screen.dart';
 import 'package:iiko_delivery/feature/presentation/pages/order_screen.dart';
@@ -19,7 +20,8 @@ Future<void> main() async {
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpyYnBkZ3hrZXV6aXdhbmNqbnV4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDM1OTk3MjksImV4cCI6MjAxOTE3NTcyOX0.LRoNNuBTHVojbObD7VgHdYnQxSa5Sv9gB85nh5XZdak',
   );
-
+  await Geolocator.checkPermission();
+  await Geolocator.requestPermission();
   init();
 
   runApp(const MyApp());
@@ -43,6 +45,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<ItemCubit>(
           create: (context) => sl<ItemCubit>(),
         ),
+        BlocProvider<LocationCubit>(
+          create: (context) => sl<LocationCubit>(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -50,11 +55,11 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           inputDecorationTheme: InputDecorationTheme(
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 2, color: Color(0xFF78C4A4)),
+              borderSide: const BorderSide(width: 2, color: Color(0xFF78C4A4)),
               borderRadius: BorderRadius.circular(12),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 2, color: Color(0xFF78C4A4)),
+              borderSide: const BorderSide(width: 2, color: Color(0xFF78C4A4)),
               borderRadius: BorderRadius.circular(10),
             ),
           ),

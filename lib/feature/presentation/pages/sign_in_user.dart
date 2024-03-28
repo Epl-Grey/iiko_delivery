@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:iiko_delivery/core/error/failure.dart';
 import 'package:iiko_delivery/feature/domain/usecases/sign_in_user.dart';
 import 'package:iiko_delivery/locator_service.dart';
@@ -31,7 +29,7 @@ class _SignInUserPage extends State<SignInUserPage> {
 
   String _mapFailureFromMessage(Failure failure) {
     switch (failure.runtimeType) {
-      case ServerFailure:
+      case ServerFailure _:
         return "ServerFailure";
       default:
         return "Unexpected error";
@@ -61,9 +59,9 @@ class _SignInUserPage extends State<SignInUserPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(20),
+        preferredSize: const Size.fromHeight(20),
         child: AppBar(
-          backgroundColor: Color(0xFFFAF7F5),
+          backgroundColor: const Color(0xFFFAF7F5),
         ),
       ),
       body: Container(
@@ -91,20 +89,6 @@ class _SignInUserPage extends State<SignInUserPage> {
             ),
             const SizedBox.square(
               dimension: 3,
-            ),
-            const Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(
-                  'Введите вашу\n\почту и пароль',
-                  style: TextStyle(
-                    color: Color(0xFF403F3E),
-                    fontSize: 24,
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
             ),
             const SizedBox.square(
               dimension: 100,

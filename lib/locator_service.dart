@@ -1,15 +1,20 @@
 import 'package:get_it/get_it.dart';
 import 'package:iiko_delivery/core/platform/network_info.dart';
 import 'package:iiko_delivery/feature/data/datasources/item_remote_data_source.dart';
+import 'package:iiko_delivery/feature/data/datasources/location_remote_data_source.dart';
 import 'package:iiko_delivery/feature/data/datasources/order_remote_data_source.dart';
 import 'package:iiko_delivery/feature/data/repositories/item_repository_impl.dart';
+import 'package:iiko_delivery/feature/data/repositories/location_repositorey_impl.dart';
 import 'package:iiko_delivery/feature/data/repositories/order_repository_impl.dart';
 import 'package:iiko_delivery/feature/domain/repositories/item_repository.dart';
+import 'package:iiko_delivery/feature/domain/repositories/location_repositiry.dart';
 import 'package:iiko_delivery/feature/domain/repositories/order_repository.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_order_items.dart';
+import 'package:iiko_delivery/feature/domain/usecases/get_phone_location.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_user_orders.dart';
 import 'package:iiko_delivery/feature/domain/usecases/set_order_is_delivered.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
 
 import 'package:iiko_delivery/feature/data/datasources/user_remote_data_source.dart';
@@ -28,14 +33,18 @@ Future<void> init() async {
   sl.registerFactory<OrderCubit>(() => OrderCubit(sl()));
   sl.registerFactory<SignInUserCubit>(() => SignInUserCubit(signInUser: sl()));
   sl.registerFactory<ItemCubit>(() => ItemCubit(sl()));
-  
+  sl.registerFactory<LocationCubit>(() => LocationCubit(sl()));
+
   // UseCases
   sl.registerLazySingleton<GetUserOrders>(
       () => GetUserOrders(orderRepository: sl()));
   sl.registerLazySingleton<SignInUser>(() => SignInUser(userRepository: sl()));
   sl.registerLazySingleton<GetOrderItems>(
       () => GetOrderItems(orderRepository: sl()));
-  sl.registerLazySingleton<SetOrderIsDelivered>(() => SetOrderIsDelivered(orderRepository: sl()));
+  sl.registerLazySingleton<SetOrderIsDelivered>(
+      () => SetOrderIsDelivered(orderRepository: sl()));
+  sl.registerLazySingleton<GetPhoneLocation>(
+      () => GetPhoneLocation(locationRepository: sl()));
 
   // Repository
   sl.registerLazySingleton<OrderRepository>(
@@ -44,6 +53,8 @@ Future<void> init() async {
       () => UserRepositoryImpl(userRemoteDataSources: sl()));
   sl.registerLazySingleton<ItemRepository>(
       () => ItemRepositoryImpl(itemRemoteDataSource: sl()));
+  sl.registerLazySingleton<LocationRepository>(
+      () => LocationRepositoryImpl(locationRemoteDataSource: sl()));
 
   sl.registerLazySingleton<OrderRemoteDataSource>(
     () => OrderRemoteDataSourceImpl(Supabase.instance.client),
@@ -55,7 +66,8 @@ Future<void> init() async {
 
   sl.registerLazySingleton<UserRemoteDataSources>(() =>
       UserRemoteDataSourcesImpl(supabaseClient: Supabase.instance.client));
-
+  sl.registerLazySingleton(
+      <locationRemoteDataSource>() => LocationRemoteDataSourceImpl());
   // Core
   sl.registerLazySingleton<NetworkInfo>(
     () => NetworkInfoImpl(connectionChecker: sl()),

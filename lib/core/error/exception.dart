@@ -6,7 +6,7 @@ abstract class Exception extends Equatable{
 }
 
 class ServerException extends Exception{
-  const ServerException(String message):super(message);
+  const ServerException(super.message);
   @override
   List<Object?> get props => [message];
 }

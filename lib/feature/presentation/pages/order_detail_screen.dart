@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_state.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/item_list_widget.dart';
 
 class OrderDetailPage extends StatefulWidget {
@@ -17,12 +18,35 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   Widget build(BuildContext context) {
     final order = ModalRoute.of(context)!.settings.arguments as OrderEntity;
     context.read<ItemCubit>().getUserOrders(order.id);
+    context.read<LocationCubit>().getPhoneLocation();
+
+    // void PhoneLocation() async {
+    //   final failureOrLocation = await getPhoneLocation();
+    //   failureOrLocation.fold(
+    //     (failure) => {print(mapFailureFromMessage(failure))},
+    //     (location) => {print(location)},
+    //   );
+
+    //   //  List<Location> locations = await locationFromAddress(order.address);
+    // }
+
     return Scaffold(
+      // GoogleMap(
+      //   initialCameraPosition: const CameraPosition(
+      //       target: LatLng(54.9302709, 73.4215571), zoom: 14.5),
+      //   markers: {
+      //     const Marker(
+      //         markerId: MarkerId('phone'),
+      //         position: LatLng(54.9302709, 73.4215571)),
+      //   },
+      // ),
+
       body: Container(
         alignment: Alignment.bottomCenter,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+
             Text(
               order.address,
               style: const TextStyle(color: Colors.black, fontSize: 30),

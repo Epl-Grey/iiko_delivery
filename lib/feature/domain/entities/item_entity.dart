@@ -7,7 +7,7 @@ class ItemEntity extends Equatable{
   final int count;
   final int cost;
 
-  ItemEntity({
+  const ItemEntity({
     required this.id,
     required this.orderId,
     required this.name,

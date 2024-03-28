@@ -1,7 +1,7 @@
 import 'package:iiko_delivery/feature/domain/entities/item_entity.dart';
 
 class ItemModel extends ItemEntity {
-  ItemModel({
+  const ItemModel({
     required super.id,
     required super.orderId,
     required super.name,

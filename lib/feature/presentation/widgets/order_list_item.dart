@@ -5,9 +5,9 @@ class OrderListItem extends StatefulWidget {
   final OrderEntity orderModel;
 
   const OrderListItem({
-    Key? key,
+    super.key,
     required this.orderModel,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderListItem> createState() => _OrderListItemState();
