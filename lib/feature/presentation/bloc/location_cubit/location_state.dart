@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:iiko_delivery/feature/domain/entities/location_entity.dart';
 
 abstract class LocationState extends Equatable {
   const LocationState();
@@ -14,7 +14,7 @@ class LocationLoadingState extends LocationState{}
 
 
 class GetLocationSuccessState extends LocationState {
-  final Position position;
+  final LocationEntity position;
   
   const GetLocationSuccessState({
     required this.position,

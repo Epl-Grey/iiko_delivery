@@ -46,6 +46,8 @@ dependencies:
   geolocator: ^11.0.0
   geocoding: ^3.0.0
   google_maps_flutter: ^2.5.3
+  flutter_polyline_points: ^2.0.0
+  url_launcher: ^6.2.5
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +73,7 @@ flutter:
   assets:
    - assets/ketchup.png
    - assets/autho.png
+   - assets/deliveryIcon.png
 
   fonts:
     - family: Nunito
