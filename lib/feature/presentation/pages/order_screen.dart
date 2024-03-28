@@ -1,59 +1,152 @@
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_state.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/order_list_item.dart';
-class HomePage extends StatelessWidget {
-  // ignore: constant_identifier_names
+import 'package:iiko_delivery/feature/presentation/widgets/segment_order.dart';
+import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
 
-  const HomePage({super.key});
+// ignore: must_be_immutable
+class HomePage extends StatefulWidget {
+  const HomePage({
+    super.key,
+  });
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int? groupValue = 0;
+  @override
   Widget build(BuildContext context) {
-    // final authResponse = ModalRoute.of(context)!.settings.arguments as AuthResponse;
-    // print('user id: ${authResponse.user?.id}');
     context.read<OrderCubit>().getUserOrders();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Orders'),
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.white,
+        title: Text(
+          DateFormat.yMMMEd().format(DateTime.now()),
+          style: const TextStyle(
+            color: Color(0xFF191817),
+            fontSize: 20,
+            fontFamily: 'Nunito',
+            fontWeight: FontWeight.w600,
+            height: 0,
+          ),
+        ),
+        leading: IconButton(
+            onPressed: () {}, icon: Icon(Icons.exit_to_app_outlined)),
+        backgroundColor: Color(0xFFFAF7F5),
       ),
       body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.white,
-        child: Container(
-          margin: const EdgeInsets.only(top: 10.0, left: 4, right: 4),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15.0),
-              topLeft: Radius.circular(15.0),
+        padding: EdgeInsets.only(left: 20, right: 20, top: 30),
+        color: Color(0xFFFAF7F5),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                color: Color(0xFFFAF7F5),
+                shape: BoxShape.rectangle,
+                border: Border.all(color: Color(0xFFC9C1B9)),
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 10,
+                  left: 10,
+                  right: 10,
+                  bottom: 10,
+                ),
+                child: Row(
+                  // crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const SizedBox.square(
+                      dimension: 10,
+                    ),
+                    Image.asset('assets/Wallet.png'),
+                    const SizedBox.square(
+                      dimension: 10,
+                    ),
+                    const Text('1912.5',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w500,
+                          height: 0,
+                        )),
+                  ],
+                ),
+              ),
             ),
-          ),
-          alignment: Alignment.topCenter,
-          child: BlocBuilder<OrderCubit, OrderState>(
-            builder: (context, state) {
-              if (state is GetUserOrdersSuccessState) {
-                return ListView.builder(
-                    itemCount: state.orders.length,
-                    itemBuilder: (ctx, index) =>
-                        OrderListItem(orderModel: state.orders[index]));
-              } else if (state is GetUserOrdersFailState) {
-                return Center(
-                  child: Text(state.message),
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                );
-              }
-            },
-          ),
+            SizedBox.square(
+              dimension: 30,
+            ),
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  CupertinoSlidingSegmentedControl<int>(
+                      groupValue: groupValue,
+                      thumbColor: Color(0xFF78C4A4),
+                      backgroundColor: Colors.white,
+                      children: {
+                        0: buildSegment('Будущие'),
+                        1: buildSegment('Доставленные')
+                      },
+                      onValueChanged: (groupValue) {
+                        print(groupValue);
+                        setState(() => this.groupValue = groupValue);
+                      })
+                ],
+              ),
+            ),
+            SizedBox.square(
+              dimension: 15,
+            ),
+            const Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  "Заказы",
+                  style: TextStyle(
+                    color: Color(0xFF191817),
+                    fontSize: 26,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w500,
+                    height: 0,
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: BlocBuilder<OrderCubit, OrderState>(
+                builder: (context, state) {
+                  if (state is GetUserOrdersSuccessState) {
+                    return ListView.builder(
+                        itemCount: state.orders.length,
+                        itemBuilder: (ctx, index) =>
+                            OrderListItem(orderModel: state.orders[index]));
+                  } else if (state is GetUserOrdersFailState) {
+                    return Center(
+                      child: Text(state.message),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    );
+                  }
+                },
+                // ),
+              ),
+            ),
+          ],
         ),
       ),
     );
