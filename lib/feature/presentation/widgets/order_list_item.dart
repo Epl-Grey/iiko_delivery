@@ -20,7 +20,8 @@ class _OrderListItemState extends State<OrderListItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, "/orders/detail", arguments: widget.orderModel);
+        Navigator.pushNamed(context, "/orders/detail",
+            arguments: widget.orderModel);
       },
       child: AnimatedSize(
         duration: const Duration(milliseconds: 200),
@@ -40,8 +41,12 @@ class _OrderListItemState extends State<OrderListItem> {
               Expanded(
                   child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [Text('№ ${widget.orderModel.orderNumber}'),
-                Text(widget.orderModel.cost.toString())],
+                children: [
+                  Text(
+                    '№ ${widget.orderModel.orderNumber}',
+                  ),
+                  Text(widget.orderModel.cost.toString())
+                ],
               )),
             ],
           ),

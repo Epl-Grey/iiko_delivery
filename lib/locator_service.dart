@@ -66,9 +66,8 @@ Future<void> init() async {
 
   sl.registerLazySingleton<UserRemoteDataSources>(() =>
       UserRemoteDataSourcesImpl(supabaseClient: Supabase.instance.client));
-  sl.registerLazySingleton(
-      <locationRemoteDataSource>() => LocationRemoteDataSourceImpl());
-  // Core
+  sl.registerLazySingleton<LocationRemoteDataSource>(
+      () => LocationRemoteDataSourceImpl());
   sl.registerLazySingleton<NetworkInfo>(
     () => NetworkInfoImpl(connectionChecker: sl()),
   );
