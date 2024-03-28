@@ -18,9 +18,9 @@ class UserRepositoryImpl extends UserRepository {
     return Right(respone);
     } on ServerFailure catch(error) {
       return Left(ServerFailure(message: error.message));
+    } catch(error){
+      return Left(ServerFailure(message: error.toString()));
     }
   }
-
-
 }
 

@@ -1,7 +1,8 @@
-
 import 'package:flutter/material.dart';
-import 'package:iiko_delivery/core/error/failure.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iiko_delivery/feature/domain/usecases/sign_in_user.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_state.dart';
 import 'package:iiko_delivery/locator_service.dart';
 
 class SignInUserPage extends StatefulWidget {
@@ -13,55 +14,17 @@ class SignInUserPage extends StatefulWidget {
 
 class _SignInUserPage extends State<SignInUserPage> {
   final SignInUser signInUser = sl<SignInUser>();
-  final controller1 = TextEditingController();
-  final controller2 = TextEditingController();
-  void login(String email, String password) async {
-    final failureOrUser =
-        await signInUser(UserSignInParams(email: email, password: password));
-    failureOrUser.fold(
-      (failure) => {print(_mapFailureFromMessage(failure))},
-      (user) => {
-        Navigator.pop(context),
-        Navigator.pushNamed(context, "/orders", arguments: user)
-      },
-    );
-  }
-
-  String _mapFailureFromMessage(Failure failure) {
-    switch (failure.runtimeType) {
-      case ServerFailure _:
-        return "ServerFailure";
-      default:
-        return "Unexpected error";
-    }
-  }
-
-  // Future<void> checkLogin() async {
-  //   final failureOrUser =
-  //       await signInUser(const UserSignInParams(email: '', password: ''));
-  //   failureOrUser.fold(
-  //     (failure) => {},
-  //     (user) => {
-  //       Navigator.pop(context),
-  //       Navigator.pushNamed(context, "/orders", arguments: user)
-  //     },
-  //   );
-  // }
-
-  // @override
-  // void initState() {
-  //   checkLogin();
-  //   super.initState();
-  // }
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(20),
+        preferredSize: Size.fromHeight(20),
         child: AppBar(
-          backgroundColor: const Color(0xFFFAF7F5),
+          backgroundColor: Color(0xFFFAF7F5),
         ),
       ),
       body: Container(
@@ -90,11 +53,25 @@ class _SignInUserPage extends State<SignInUserPage> {
             const SizedBox.square(
               dimension: 3,
             ),
+            const Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  'Введите вашу\n\почту и пароль',
+                  style: TextStyle(
+                    color: Color(0xFF403F3E),
+                    fontSize: 24,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
             const SizedBox.square(
               dimension: 100,
             ),
             TextField(
-              controller: controller1,
+              controller: emailController,
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Color(0xFFFAF7F5),
@@ -114,7 +91,7 @@ class _SignInUserPage extends State<SignInUserPage> {
                 fillColor: Color(0xFFFAF7F5),
                 hintText: "Пароль",
               ),
-              controller: controller2,
+              controller: passwordController,
               style: const TextStyle(
                 fontSize: 16,
                 color: Color(0xFF403F3E),
@@ -146,9 +123,9 @@ class _SignInUserPage extends State<SignInUserPage> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: ElevatedButton(
-                  onPressed: () async {
-                    login(controller1.text, controller2.text);
-                  },
+                  onPressed: () => context
+                      .read<SignInUserCubit>()
+                      .auth(emailController.text, passwordController.text),
                   style: const ButtonStyle(
                     backgroundColor:
                         MaterialStatePropertyAll(Color(0xFF403F3E)),
@@ -166,6 +143,24 @@ class _SignInUserPage extends State<SignInUserPage> {
                   ),
                 ),
               ),
+            ),
+            BlocListener<SignInUserCubit, SignInUserState>(
+              listener: (context, state) {
+                if (state is SignInUserLoaded) {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, "/orders", arguments: state.user);
+                  print("Signed in.");
+                } else if (state is SignInUserError) {
+                  print("Signing in ERROR.");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Ошибка аутентификации!'),
+                      backgroundColor: Colors.redAccent,
+                    ),
+                  );
+                }
+              },
+              child: const SizedBox(),
             )
           ],
         ),
