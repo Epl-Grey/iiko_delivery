@@ -1,14 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_state.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/order_list_item.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/segment_order.dart';
-import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
@@ -39,20 +36,20 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         leading: IconButton(
-            onPressed: () {}, icon: Icon(Icons.exit_to_app_outlined)),
-        backgroundColor: Color(0xFFFAF7F5),
+            onPressed: () {}, icon: const Icon(Icons.exit_to_app_outlined)),
+        backgroundColor: const Color(0xFFFAF7F5),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 20, right: 20, top: 30),
-        color: Color(0xFFFAF7F5),
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
+        color: const Color(0xFFFAF7F5),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
-                color: Color(0xFFFAF7F5),
+                color: const Color(0xFFFAF7F5),
                 shape: BoxShape.rectangle,
-                border: Border.all(color: Color(0xFFC9C1B9)),
+                border: Border.all(color: const Color(0xFFC9C1B9)),
                 borderRadius: BorderRadius.circular(24),
               ),
               child: Padding(
@@ -85,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            SizedBox.square(
+            const SizedBox.square(
               dimension: 30,
             ),
             Center(
@@ -94,20 +91,19 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   CupertinoSlidingSegmentedControl<int>(
                       groupValue: groupValue,
-                      thumbColor: Color(0xFF78C4A4),
+                      thumbColor: const Color(0xFF78C4A4),
                       backgroundColor: Colors.white,
                       children: {
                         0: buildSegment('Будущие'),
                         1: buildSegment('Доставленные')
                       },
                       onValueChanged: (groupValue) {
-                        print(groupValue);
                         setState(() => this.groupValue = groupValue);
                       })
                 ],
               ),
             ),
-            SizedBox.square(
+            const SizedBox.square(
               dimension: 15,
             ),
             const Row(

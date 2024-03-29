@@ -19,7 +19,7 @@ class SignInUserCubit extends Cubit<SignInUserState> {
 
   String mapFailureFromMessage(Failure failure) {
     switch (failure.runtimeType) {
-      case ServerFailure:
+      case ServerFailure _:
         return "ServerFailure";
       default:
         return "Unexpected error";

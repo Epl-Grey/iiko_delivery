@@ -24,7 +24,7 @@ class _SignInUserPage extends State<SignInUserPage> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(20),
         child: AppBar(
-          backgroundColor: Color(0xFFFAF7F5),
+          backgroundColor: const Color(0xFFFAF7F5),
         ),
       ),
       body: Container(
