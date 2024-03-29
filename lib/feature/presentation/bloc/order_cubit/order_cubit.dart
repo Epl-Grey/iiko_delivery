@@ -8,10 +8,10 @@ class OrderCubit extends Cubit<OrderState> {
     this.getUserOrdersUseCase,
   ) : super(OrderInitial());
 
-  getUserOrders() async {
+  getUserOrders(bool isDelivered) async {
     emit(OrderLoadingState());
 
-    final response = await getUserOrdersUseCase();
+    final response = await getUserOrdersUseCase(OrderParams(isDelivered: isDelivered));
 
     response.fold((fail) => emit(GetUserOrdersFailState(message: fail.toString())),
         (success) => emit(GetUserOrdersSuccessState(orders: success)));

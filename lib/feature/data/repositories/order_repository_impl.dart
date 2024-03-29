@@ -13,9 +13,9 @@ class OrderRepositoryImpl implements OrderRepository {
   });
 
   @override
-  Future<Either<ServerFailure, List<OrderModel>>> getUserOrders() async {
+  Future<Either<ServerFailure, List<OrderModel>>> getUserOrders(bool isDelivered) async {
     try{
-      final response = await remoteDataSource.getUserOrders();
+      final response = await remoteDataSource.getUserOrders(isDelivered);
       return Right(response);
     }on ServerException catch(error){
       return Left(ServerFailure(message: error.message));
