@@ -10,10 +10,10 @@ class ItemCubit extends Cubit<ItemState> {
     this.getOrderItemsUseCase,
   ) : super(ItemInitial());
 
-  getOrderItems(int userId) async {
+  getOrderItems(int orderId) async {
     emit(ItemLoadingState());
 
-    final response = await getOrderItemsUseCase(ItemParams(userId: userId));
+    final response = await getOrderItemsUseCase(ItemParams(orderId: orderId));
 
     response.fold((fail) => emit(GetOrderItemsFailState(message: fail.toString())),
         (success) => emit(GetOrderItemsSuccessState(items: success)));
