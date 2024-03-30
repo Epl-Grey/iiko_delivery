@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int? groupValue = 0;
-  late bool isDelivered = true;
+  late bool isDelivered = false;
   @override
   Widget build(BuildContext context) {
 

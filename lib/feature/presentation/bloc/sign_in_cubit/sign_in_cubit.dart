@@ -6,7 +6,7 @@ import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_st
 class SignInUserCubit extends Cubit<SignInUserState> {
   final SignInUser signInUser;
 
-  SignInUserCubit({required this.signInUser}) : super(SignInUserInnitial());
+  SignInUserCubit({required this.signInUser}) : super(SignInUserInitial());
 
   auth(String email, String password) async {
     emit(SignInUserStart());
