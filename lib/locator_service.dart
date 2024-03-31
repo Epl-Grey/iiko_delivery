@@ -12,7 +12,10 @@ import 'package:iiko_delivery/feature/domain/repositories/order_repository.dart'
 import 'package:iiko_delivery/feature/domain/usecases/get_order_items.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_phone_location.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_user_orders.dart';
+import 'package:iiko_delivery/feature/domain/usecases/get_user_orders_by_day.dart';
+import 'package:iiko_delivery/feature/domain/usecases/get_user_orders_by_month.dart';
 import 'package:iiko_delivery/feature/domain/usecases/set_order_is_delivered.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/daily_salary_cubit/daily_salary_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
@@ -21,6 +24,7 @@ import 'package:iiko_delivery/feature/data/datasources/user_remote_data_source.d
 import 'package:iiko_delivery/feature/data/repositories/user_repository_impl.dart';
 import 'package:iiko_delivery/feature/domain/repositories/user_repository.dart';
 import 'package:iiko_delivery/feature/domain/usecases/sign_in_user.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_cubit.dart';
 
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -30,10 +34,14 @@ final GetIt sl = GetIt.instance;
 
 Future<void> init() async {
   // Bloc / Cubit
-  sl.registerFactory<OrderCubit>(() => OrderCubit(sl()));
+  sl.registerFactory<OrderCubit>(() => OrderCubit(sl(), sl()));
   sl.registerFactory<SignInUserCubit>(() => SignInUserCubit(signInUser: sl()));
   sl.registerFactory<ItemCubit>(() => ItemCubit(sl()));
   sl.registerFactory<LocationCubit>(() => LocationCubit(sl()));
+  sl.registerFactory<DailySalaryCubit>(
+      () => DailySalaryCubit(getUserOrdersByDay: sl(), getOrderItems: sl()));
+  sl.registerFactory<OrdersCostCubit>(() => OrdersCostCubit(
+      getUserOrders: sl(), getUserOrdersByDay: sl(), getOrderItems: sl()));
 
   // UseCases
   sl.registerLazySingleton<GetUserOrders>(
@@ -45,6 +53,10 @@ Future<void> init() async {
       () => SetOrderIsDelivered(orderRepository: sl()));
   sl.registerLazySingleton<GetPhoneLocation>(
       () => GetPhoneLocation(locationRepository: sl()));
+  sl.registerLazySingleton<GetUserOrdersByDay>(
+      () => GetUserOrdersByDay(orderRepository: sl()));
+  sl.registerLazySingleton<GetUserOrdersByMonth>(
+      () => GetUserOrdersByMonth(orderRepository: sl()));
 
   // Repository
   sl.registerLazySingleton<OrderRepository>(

@@ -29,7 +29,6 @@ class GetUserOrdersByDay extends UseCase<List<OrderEntity>, OrdersByDayParams> {
     final response = await orderRepository.getUserOrdersByDateRange(startDate, endDate, isDelivered: params.isDelivered);
     return response;
   }
-  
 }
 
 class OrdersByDayParams extends Equatable{

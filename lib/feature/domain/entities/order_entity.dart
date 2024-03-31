@@ -7,7 +7,6 @@ class OrderEntity extends Equatable{
   final int id;
   final String orderNumber;
   final String address;
-  final Decimal cost;
   final bool isDelivered;
   final String clientPhone;
   final String clientName;
@@ -17,7 +16,6 @@ class OrderEntity extends Equatable{
     required this.id,
     required this.orderNumber,
     required this.address,
-    required this.cost,
     required this.isDelivered,
     required this.clientPhone,
     required this.clientName,
@@ -25,5 +23,5 @@ class OrderEntity extends Equatable{
   });
 
   @override
-  get props => [id, orderNumber, address, cost, isDelivered, clientPhone, clientName, orderDate];
+  get props => [id, orderNumber, address, isDelivered, clientPhone, clientName, orderDate];
 }

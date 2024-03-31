@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
 
 class OrderListItem extends StatefulWidget {
   final OrderEntity orderModel;
@@ -43,7 +45,17 @@ class _OrderListItemState extends State<OrderListItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('№ ${widget.orderModel.orderNumber}'),
-                  Text(widget.orderModel.cost.toString())
+                  BlocBuilder<OrdersCostCubit, OrdersCostState>(
+                    builder: (context, state) {
+                      if(state is OrdersCostSuccess){
+                        return Text(state.costs[widget.orderModel.id]!.toStringAsFixed(2));
+                      }else if(state is OrdersCostFailure){
+                        return Text(state.message);
+                      }else{
+                        return const Text('Loading...');
+                      }
+                    },
+                  ),
                 ],
               )),
             ],

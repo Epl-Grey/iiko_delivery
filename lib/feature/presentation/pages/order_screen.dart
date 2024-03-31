@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/daily_salary_cubit/daily_salary_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
 import 'package:intl/intl.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_state.dart';
@@ -22,8 +24,9 @@ class _HomePageState extends State<HomePage> {
   late bool isDelivered = false;
   @override
   Widget build(BuildContext context) {
-
     context.read<OrderCubit>().getUserOrders(isDelivered);
+    context.read<DailySalaryCubit>().getDailySalary();
+    context.read<OrdersCostCubit>().getOrdersCost(isDelivered);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -72,14 +75,35 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox.square(
                       dimension: 10,
                     ),
-                    const Text('1912.5',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w500,
-                          height: 0,
-                        )),
+                    BlocBuilder<DailySalaryCubit, DailySalaryState>(
+                      builder: (context, state) {
+                        if (state is DailySalarySuccess) {
+                          return Text(state.salary.toStringAsFixed(2),
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w500,
+                                height: 0,
+                              ));
+                        } else if (state is DailySalaryFailure) {
+                          return Center(
+                            child: Text(state.message),
+                          );
+                        } else {
+                          return const Center(
+                            child: Text('Loading...',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontFamily: 'Nunito',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                )),
+                          );
+                        }
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -96,8 +120,7 @@ class _HomePageState extends State<HomePage> {
                       thumbColor: const Color(0xFF78C4A4),
                       backgroundColor: Colors.white,
                       children: {
-                        0: buildSegment('Будущие'), 
-                        
+                        0: buildSegment('Будущие'),
                         1: buildSegment('Доставленные')
                       },
                       onValueChanged: (groupValue) {
