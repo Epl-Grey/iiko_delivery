@@ -55,6 +55,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
               child: BlocBuilder<LocationCubit, LocationState>(
                 builder: (context, state) {
                   if (state is GetLocationSuccessState) {
+                    
                     return GoogleMap(
                       initialCameraPosition: CameraPosition(
                           target: LatLng(state.position.locations[0].latitude,

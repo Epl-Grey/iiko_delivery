@@ -9,6 +9,7 @@ import 'package:iiko_delivery/feature/presentation/pages/order_screen.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/pages/sign_in_user.dart';
 import 'package:iiko_delivery/feature/presentation/pages/splash_screen_page.dart';
+import 'package:iiko_delivery/feature/presentation/pages/statistics_screen.dart';
 
 import 'package:iiko_delivery/locator_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -75,6 +76,7 @@ class MyApp extends StatelessWidget {
           '/orders': (context) => const HomePage(),
           '/splash': (context) => const SplashPage(),
           '/orders/detail': (context) => const OrderDetailPage(),
+          '/statistics': (context) => const StatisticaPage(),
         },
       ),
     );

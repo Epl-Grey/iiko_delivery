@@ -74,6 +74,7 @@ flutter:
    - assets/autho.png
    - assets/Wallet.png
    - assets/deliveryIcon.png
+   - assets/backSallary.png
 
   fonts:
     - family: Nunito

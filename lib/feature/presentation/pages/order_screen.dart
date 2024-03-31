@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int? groupValue = 0;
-  late bool isDelivered = true;
+  late bool isDelivered = false;
   @override
   Widget build(BuildContext context) {
 
@@ -61,26 +61,31 @@ class _HomePageState extends State<HomePage> {
                   right: 10,
                   bottom: 10,
                 ),
-                child: Row(
-                  // crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    const SizedBox.square(
-                      dimension: 10,
-                    ),
-                    Image.asset('assets/Wallet.png'),
-                    const SizedBox.square(
-                      dimension: 10,
-                    ),
-                    const Text('1912.5',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w500,
-                          height: 0,
-                        )),
-                  ],
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushReplacementNamed('/statistics');
+                  },
+                  child: Row(
+                    // crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      const SizedBox.square(
+                        dimension: 10,
+                      ),
+                      Image.asset('assets/Wallet.png'),
+                      const SizedBox.square(
+                        dimension: 10,
+                      ),
+                      const Text('1912.5',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w500,
+                            height: 0,
+                          )),
+                    ],
+                  ),
                 ),
               ),
             ),
