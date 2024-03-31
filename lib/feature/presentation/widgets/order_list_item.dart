@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
+import 'package:intl/intl.dart';
 
 class OrderListItem extends StatefulWidget {
   final OrderEntity orderModel;
@@ -45,7 +46,7 @@ class _OrderListItemState extends State<OrderListItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('№ ${widget.orderModel.orderNumber}'),
-                  Text('№ ${widget.orderModel.orderDate}'),
+                  Text(DateFormat("dd MMMM yyyy hh:mm").format(widget.orderModel.orderDate.toLocal())),
                   BlocBuilder<OrdersCostCubit, OrdersCostState>(
                     builder: (context, state) {
                       if(state is OrdersCostSuccess){
