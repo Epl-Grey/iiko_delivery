@@ -1,5 +1,5 @@
-
-
+import 'package:decimal/decimal.dart';
+import 'package:decimal/intl.dart';
 import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
 
 class OrderModel extends OrderEntity {
@@ -19,11 +19,11 @@ class OrderModel extends OrderEntity {
       id: map['id'] as int,
       orderNumber: map['order_number'] as String,
       address: map['address'] as String,
-      cost: map['cost'] as int,
+      cost: Decimal.fromJson(map['cost'].toString()),
       isDelivered: map['is_delivered'] as bool, 
       clientPhone: map['client_phone'] as String,
       clientName: map['client_name'] as String,
-      orderDate: map['order_date'] as String,
+      orderDate: DateTime.parse(map['order_date'] as String),
     );
   }
 
@@ -36,7 +36,7 @@ class OrderModel extends OrderEntity {
       'isDelivered': isDelivered,
       'clientPhone': clientPhone,
       'clientName': clientName,
-      'orderDate': orderDate,
+      'orderDate': orderDate.toIso8601String(),
     };
   }
 

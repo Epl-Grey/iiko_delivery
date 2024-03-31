@@ -16,5 +16,4 @@ class OrderCubit extends Cubit<OrderState> {
     response.fold((fail) => emit(GetUserOrdersFailState(message: fail.toString())),
         (success) => emit(GetUserOrdersSuccessState(orders: success)));
   }
-
 }

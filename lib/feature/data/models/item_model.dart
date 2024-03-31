@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:iiko_delivery/feature/domain/entities/item_entity.dart';
 
 class ItemModel extends ItemEntity {
@@ -15,7 +16,7 @@ class ItemModel extends ItemEntity {
       orderId: map['order_id'] as int,
       name: map['name'] as String,
       count: map['count'] as int,
-      cost: map['cost'] as int,
+      cost: Decimal.fromJson(map['cost'].toString()),
     );
   }
 

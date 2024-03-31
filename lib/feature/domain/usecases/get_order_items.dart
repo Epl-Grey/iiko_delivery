@@ -14,20 +14,20 @@ class GetOrderItems extends UseCase<List<ItemEntity>, ItemParams> {
 
   @override
    Future<Either<Failure, List<ItemEntity>>> call(ItemParams params) async {
-    final response = await orderRepository.getOrderItems(params.userId);
+    final response = await orderRepository.getOrderItems(params.orderId);
     return response;
   }
 }
 
 class ItemParams extends Equatable {
-  final int userId;
+  final int orderId;
 
   const ItemParams({
-    required this.userId,
+    required this.orderId,
   });
 
   @override
   List<Object?> get props => [
-        userId,
+        orderId,
       ];
 }

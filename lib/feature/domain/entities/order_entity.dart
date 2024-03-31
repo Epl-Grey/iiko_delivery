@@ -1,14 +1,17 @@
+import 'dart:ffi';
+
+import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 
 class OrderEntity extends Equatable{
   final int id;
   final String orderNumber;
   final String address;
-  final int cost;
+  final Decimal cost;
   final bool isDelivered;
   final String clientPhone;
   final String clientName;
-  final String orderDate;
+  final DateTime orderDate;
   
   const OrderEntity({
     required this.id,

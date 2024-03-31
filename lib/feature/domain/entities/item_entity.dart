@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 
 class ItemEntity extends Equatable{
@@ -5,7 +6,7 @@ class ItemEntity extends Equatable{
   final int orderId;
   final String name;
   final int count;
-  final int cost;
+  final Decimal cost;
 
   const ItemEntity({
     required this.id,
