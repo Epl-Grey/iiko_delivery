@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/statistic_cubit/statistic_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/pages/order_detail_screen.dart';
 import 'package:iiko_delivery/feature/presentation/pages/order_screen.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_cubit.dart';
@@ -53,6 +54,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<LocationCubit>(
           create: (context) => sl<LocationCubit>(),
+        ),
+        BlocProvider<StatisticCubit>(
+          create: (context) => sl<StatisticCubit>(),
         ),
       ],
       child: MaterialApp(

@@ -1,5 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/statistic_cubit/statistic_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/statistic_cubit/statistic_state.dart';
+import 'package:iiko_delivery/feature/presentation/widgets/bar_graph_widget.dart';
+import 'package:iiko_delivery/feature/presentation/widgets/order_list_item.dart';
+import 'package:intl/intl.dart';
 
 class StatisticaPage extends StatefulWidget {
   const StatisticaPage({super.key});
@@ -9,8 +15,29 @@ class StatisticaPage extends StatefulWidget {
 }
 
 class _StatisticaPageState extends State<StatisticaPage> {
+  DateTime _selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2010),
+      lastDate: DateTime(2030),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    String month = DateFormat('MM').format(_selectedDate);
+    String year = DateFormat('yyyy').format(_selectedDate);
+    context
+        .read<StatisticCubit>()
+        .getUserOrdersByMonth(int.parse(year), int.parse(month), true);
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -55,6 +82,31 @@ class _StatisticaPageState extends State<StatisticaPage> {
                         height: 0,
                       )),
                 ],
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _selectDate(context);
+              },
+              child: const Text('Выбрать дату'),
+            ),
+            SizedBox(
+              height: 300,
+              child: BlocBuilder<StatisticCubit, StatisticState>(
+                builder: (context, state) {
+                  if (state is GetUserStatisticsSuccessState) {
+                    return BarGraphWidget(length: state.orders.length, heights: state.orders, width: 30,);
+                  } else if (state is GetUserStatisticsFailState) {
+                    return Center(
+                      child: Text(state.message),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    );
+                  }
+                },
+                // ),
               ),
             ),
           ],

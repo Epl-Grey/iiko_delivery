@@ -20,9 +20,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int? groupValue = 0;
   late bool isDelivered = false;
+
   @override
   Widget build(BuildContext context) {
-
     context.read<OrderCubit>().getUserOrders(isDelivered);
     return Scaffold(
       appBar: AppBar(
@@ -101,8 +101,7 @@ class _HomePageState extends State<HomePage> {
                       thumbColor: const Color(0xFF78C4A4),
                       backgroundColor: Colors.white,
                       children: {
-                        0: buildSegment('Будущие'), 
-                        
+                        0: buildSegment('Будущие'),
                         1: buildSegment('Доставленные')
                       },
                       onValueChanged: (groupValue) {
