@@ -6,11 +6,13 @@ import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.da
 import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/statistic_cubit/statistic_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/pages/order_detail_screen.dart';
 import 'package:iiko_delivery/feature/presentation/pages/order_screen.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/pages/sign_in_user.dart';
 import 'package:iiko_delivery/feature/presentation/pages/splash_screen_page.dart';
+import 'package:iiko_delivery/feature/presentation/pages/statistics_screen.dart';
 
 import 'package:iiko_delivery/locator_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -61,6 +63,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<OrdersCostCubit>(
           create: (context) => sl<OrdersCostCubit>(),
         ),
+        BlocProvider<StatisticCubit>(
+          create: (context) => sl<StatisticCubit>(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -83,6 +88,7 @@ class MyApp extends StatelessWidget {
           '/orders': (context) => const HomePage(),
           '/splash': (context) => const SplashPage(),
           '/orders/detail': (context) => const OrderDetailPage(),
+          '/statistics': (context) => const StatisticaPage(),
         },
       ),
     );

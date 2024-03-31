@@ -22,6 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int? groupValue = 0;
   late bool isDelivered = false;
+
   @override
   Widget build(BuildContext context) {
     context.read<OrderCubit>().getUserOrders(isDelivered);
@@ -64,18 +65,22 @@ class _HomePageState extends State<HomePage> {
                   right: 10,
                   bottom: 10,
                 ),
-                child: Row(
-                  // crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    const SizedBox.square(
-                      dimension: 10,
-                    ),
-                    Image.asset('assets/Wallet.png'),
-                    const SizedBox.square(
-                      dimension: 10,
-                    ),
-                    BlocBuilder<DailySalaryCubit, DailySalaryState>(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushReplacementNamed('/statistics');
+                  },
+                  child: Row(
+                    // crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      const SizedBox.square(
+                        dimension: 10,
+                      ),
+                      Image.asset('assets/Wallet.png'),
+                      const SizedBox.square(
+                        dimension: 10,
+                      ),
+                      BlocBuilder<DailySalaryCubit, DailySalaryState>(
                       builder: (context, state) {
                         if (state is DailySalarySuccess) {
                           return Text(state.salary.toStringAsFixed(2),
@@ -93,18 +98,19 @@ class _HomePageState extends State<HomePage> {
                         } else {
                           return const Center(
                             child: Text('Loading...',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w500,
-                                  height: 0,
-                                )),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.w500,
+                                    height: 0,
+                                  )),
                           );
                         }
                       },
                     ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -26,6 +26,7 @@ import 'package:iiko_delivery/feature/domain/repositories/user_repository.dart';
 import 'package:iiko_delivery/feature/domain/usecases/sign_in_user.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/statistic_cubit/statistic_cubit.dart';
 
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -42,6 +43,7 @@ Future<void> init() async {
       () => DailySalaryCubit(getUserOrdersByDay: sl(), getOrderItems: sl()));
   sl.registerFactory<OrdersCostCubit>(() => OrdersCostCubit(
       getUserOrders: sl(), getUserOrdersByDay: sl(), getOrderItems: sl()));
+  sl.registerFactory<StatisticCubit>(() => StatisticCubit(sl()));
 
   // UseCases
   sl.registerLazySingleton<GetUserOrders>(

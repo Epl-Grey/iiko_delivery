@@ -45,6 +45,7 @@ class _OrderListItemState extends State<OrderListItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('№ ${widget.orderModel.orderNumber}'),
+                  Text('№ ${widget.orderModel.orderDate}'),
                   BlocBuilder<OrdersCostCubit, OrdersCostState>(
                     builder: (context, state) {
                       if(state is OrdersCostSuccess){
