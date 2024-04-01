@@ -8,6 +8,7 @@ import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_state.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/order_list_item.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/segment_order.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
@@ -46,7 +47,8 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: const Color(0xFFFAF7F5),
       ),
       body: Container(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
+        padding:
+            const EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 20),
         color: const Color(0xFFFAF7F5),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -81,23 +83,23 @@ class _HomePageState extends State<HomePage> {
                         dimension: 10,
                       ),
                       BlocBuilder<DailySalaryCubit, DailySalaryState>(
-                      builder: (context, state) {
-                        if (state is DailySalarySuccess) {
-                          return Text(state.salary.toStringAsFixed(2),
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontFamily: 'Nunito',
-                                fontWeight: FontWeight.w500,
-                                height: 0,
-                              ));
-                        } else if (state is DailySalaryFailure) {
-                          return Center(
-                            child: Text(state.message),
-                          );
-                        } else {
-                          return const Center(
-                            child: Text('Loading...',
+                        builder: (context, state) {
+                          if (state is DailySalarySuccess) {
+                            return Text(state.salary.toStringAsFixed(2),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontFamily: 'Nunito',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                ));
+                          } else if (state is DailySalaryFailure) {
+                            return Center(
+                              child: Text(state.message),
+                            );
+                          } else {
+                            return const Center(
+                              child: Text('Loading...',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,
@@ -105,10 +107,10 @@ class _HomePageState extends State<HomePage> {
                                     fontWeight: FontWeight.w500,
                                     height: 0,
                                   )),
-                          );
-                        }
-                      },
-                    ),
+                            );
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -175,6 +177,40 @@ class _HomePageState extends State<HomePage> {
                 // ),
               ),
             ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size.fromHeight(60),
+                    foregroundColor: Color(0xFF78C4A4),
+                    backgroundColor: Color(0xFF78C4A4),
+                    surfaceTintColor: Color(0xFF78C4A4),
+                  ),
+                  onPressed: () async {
+                    String telephoneNumber = '+2347012345678';
+                    String telephoneUrl = "tel:$telephoneNumber";
+                    if (await canLaunch(telephoneUrl)) {
+                      await launch(telephoneUrl);
+                    } else {
+                      throw "Error occured trying to call that number.";
+                    }
+                  },
+                  child: const Text(
+                    'Позвонить оператору',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w600,
+                      height: 0.07,
+                      letterSpacing: 0.09,
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
