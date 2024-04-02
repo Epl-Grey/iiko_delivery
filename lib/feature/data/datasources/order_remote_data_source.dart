@@ -55,6 +55,14 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
           .order('order_date', ascending: true);
     }
 
+    // print(await supabaseClient.from('Orders')
+    //                              .select()
+    //                              .gte('order_date', start)
+    //                              .lt('order_date', end)
+    //                              .eq('is_delivered', true)
+    //                              .explain());
+
+
     return data.map((order) => OrderModel.fromJson(order)).toList();
   }
 }

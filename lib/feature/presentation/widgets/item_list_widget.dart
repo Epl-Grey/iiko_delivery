@@ -50,7 +50,7 @@ class _OrderListItemState extends State<OrderItemsList> {
                   ),
                 ),
                 Text(
-                  widget.itemModel.cost.toString(),
+                  widget.itemModel.cost.toStringAsFixed(2),
                   style: const TextStyle(
                     color: Colors.black,
                   ),
