@@ -95,7 +95,7 @@ class _StatisticaPageState extends State<StatisticaPage> {
               child: BlocBuilder<StatisticCubit, StatisticState>(
                 builder: (context, state) {
                   if (state is GetUserStatisticsSuccessState) {
-                    return BarGraphWidget(length: state.orders.length, heights: state.orders, width: 30,);
+                    return BarGraphWidget(length: state.orders.length, heights: state.orders,);
                   } else if (state is GetUserStatisticsFailState) {
                     return Center(
                       child: Text(state.message),
