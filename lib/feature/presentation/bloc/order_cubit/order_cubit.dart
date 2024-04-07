@@ -12,10 +12,8 @@ class OrderCubit extends Cubit<OrderState> {
     this.getUserOrdersByDay,
   ) : super(OrderInitial());
 
-  getUserOrders(bool isDelivered) async {
+  getUserOrders(bool isDelivered, DateTime today) async {
     emit(OrderLoadingState());
-
-    final today = DateTime.now();
 
     final response = isDelivered
         ? await getUserOrdersByDay(OrdersByDayParams(

@@ -22,7 +22,7 @@ class _SignInUserPage extends State<SignInUserPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(20),
+        preferredSize: const Size.fromHeight(20),
         child: AppBar(
           backgroundColor: const Color(0xFFFAF7F5),
         ),
@@ -57,7 +57,7 @@ class _SignInUserPage extends State<SignInUserPage> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  'Введите вашу\n\почту и пароль',
+                  'Введите вашу\n почту и пароль',
                   style: TextStyle(
                     color: Color(0xFF403F3E),
                     fontSize: 24,
@@ -149,9 +149,7 @@ class _SignInUserPage extends State<SignInUserPage> {
                 if (state is SignInUserLoaded) {
                   Navigator.pop(context);
                   Navigator.pushNamed(context, "/orders", arguments: state.user);
-                  print("Signed in.");
                 } else if (state is SignInUserError) {
-                  print("Signing in ERROR.");
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Ошибка аутентификации!'),

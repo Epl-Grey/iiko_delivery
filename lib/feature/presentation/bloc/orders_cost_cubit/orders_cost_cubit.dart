@@ -1,7 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
-import 'package:iiko_delivery/feature/domain/entities/item_entity.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_order_items.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_user_orders.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_user_orders_by_day.dart';

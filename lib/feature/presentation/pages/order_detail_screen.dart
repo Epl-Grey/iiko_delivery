@@ -24,10 +24,14 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
     context.read<ItemCubit>().getOrderItems(order.id);
     context.read<LocationCubit>().getPhoneLocation(order.address);
 
-    BitmapDescriptor source = BitmapDescriptor.defaultMarker;
+    BitmapDescriptor address = BitmapDescriptor.defaultMarker;
+    BitmapDescriptor home = BitmapDescriptor.defaultMarker;
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration.empty, "assets/deliveryIcon.png")
-        .then((icon) => source = icon);
+        .then((icon) => address = icon);
+        BitmapDescriptor.fromAssetImage(
+            ImageConfiguration.empty, "assets/home.png")
+        .then((icon) => home = icon);
 
     void launchGoogleMapsNavigation(double startLat, double startLong, double destinationLat, double destinationLong) async {
       // Начальная точка
@@ -35,7 +39,9 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       String googleMapsUrl =
           'https://www.google.com/maps/dir/?api=1&origin=$startLat,$startLong&destination=$destinationLat,$destinationLong&travelmode=driving';
 
+      // ignore: deprecated_member_use
       if (await canLaunch(googleMapsUrl)) {
+        // ignore: deprecated_member_use
         await launch(googleMapsUrl);
       } else {
         throw 'Could not launch $googleMapsUrl';
@@ -64,11 +70,12 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                       markers: {
                         Marker(
                             markerId: const MarkerId('phone'),
+                            icon: home,
                             position: LatLng(state.position.phone.latitude,
                                 state.position.phone.longitude)),
                         Marker(
                             markerId: const MarkerId('order'),
-                            icon: source,
+                            icon: address,
                             position: LatLng(
                                 state.position.locations[0].latitude,
                                 state.position.locations[0].longitude)),

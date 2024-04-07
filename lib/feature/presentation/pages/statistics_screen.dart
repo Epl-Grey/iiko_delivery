@@ -1,11 +1,10 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/month_salary_cubit/month_salary_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/month_salary_cubit/month_salary_state.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/statistic_cubit/statistic_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/statistic_cubit/statistic_state.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/bar_graph_widget.dart';
-import 'package:iiko_delivery/feature/presentation/widgets/order_list_item.dart';
-import 'package:intl/intl.dart';
 
 class StatisticaPage extends StatefulWidget {
   const StatisticaPage({super.key});
@@ -33,11 +32,8 @@ class _StatisticaPageState extends State<StatisticaPage> {
 
   @override
   Widget build(BuildContext context) {
-    String month = DateFormat('MM').format(_selectedDate);
-    String year = DateFormat('yyyy').format(_selectedDate);
-    context
-        .read<StatisticCubit>()
-        .getUserOrdersByMonth(int.parse(year), int.parse(month), true);
+    context.read<StatisticCubit>().getMonthSalary(_selectedDate);
+    context.read<MonthOrderCubit>().getUserOrdersByMonth(_selectedDate);
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -73,14 +69,36 @@ class _StatisticaPageState extends State<StatisticaPage> {
                   const SizedBox.square(
                     dimension: 10,
                   ),
-                  const Text('1912.5',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w500,
-                        height: 0,
-                      )),
+                  Expanded(
+                    child: BlocBuilder<MonthOrderCubit, MonthSalaryState>(
+                      builder: (context, state) {
+                        if (state is MonthSalarySuccess) {
+                          return Text('${state.salary}₽',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w500,
+                                height: 0,
+                              ));
+                        } else if (state is MonthSalaryFailure) {
+                          return Center(
+                            child: Text(state.message),
+                          );
+                        } else {
+                          return const Text('Loading...',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w500,
+                                height: 0,
+                              ));
+                        }
+                      },
+                      // ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -90,13 +108,16 @@ class _StatisticaPageState extends State<StatisticaPage> {
               },
               child: const Text('Выбрать дату'),
             ),
-            SizedBox(
-              height: 300,
+            Expanded(
               child: BlocBuilder<StatisticCubit, StatisticState>(
                 builder: (context, state) {
-                  if (state is GetUserStatisticsSuccessState) {
-                    return BarGraphWidget(length: state.orders.length, heights: state.orders,);
-                  } else if (state is GetUserStatisticsFailState) {
+                  if (state is StatisticSuccess) {
+                    return BarGraphWidget(
+                      selectedDate: _selectedDate,
+                      length: state.length,
+                      salary: state.salary,
+                    );
+                  } else if (state is StatisticFailure) {
                     return Center(
                       child: Text(state.message),
                     );
@@ -106,7 +127,6 @@ class _StatisticaPageState extends State<StatisticaPage> {
                     );
                   }
                 },
-                // ),
               ),
             ),
           ],

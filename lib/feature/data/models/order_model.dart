@@ -1,5 +1,3 @@
-import 'package:decimal/decimal.dart';
-import 'package:decimal/intl.dart';
 import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
 
 class OrderModel extends OrderEntity {

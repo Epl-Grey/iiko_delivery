@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 
 class OrderEntity extends Equatable{

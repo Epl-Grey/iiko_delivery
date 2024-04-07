@@ -3,7 +3,6 @@ import 'package:iiko_delivery/core/error/exception.dart';
 import 'package:iiko_delivery/core/error/failure.dart';
 import 'package:iiko_delivery/feature/data/datasources/order_remote_data_source.dart';
 import 'package:iiko_delivery/feature/data/models/order_model.dart';
-import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
 import 'package:iiko_delivery/feature/domain/repositories/order_repository.dart';
 
 class OrderRepositoryImpl implements OrderRepository {

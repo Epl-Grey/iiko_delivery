@@ -1,37 +1,34 @@
-
+import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
-import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
 
-abstract class StatisticState extends Equatable {
+sealed class StatisticState extends Equatable {
   const StatisticState();
 
   @override
   List<Object> get props => [];
 }
 
-class StatisticInitial extends StatisticState {}
+final class StatisticInitial extends StatisticState {}
 
-class StatisticLoadingState extends StatisticState{}
+final class StatisticLoading extends StatisticState {}
 
-
-class GetUserStatisticsSuccessState extends StatisticState {
-  final List<OrderEntity> orders;
-  
-  const GetUserStatisticsSuccessState({
-    required this.orders,
+final class StatisticSuccess extends StatisticState {
+  final List<Decimal> salary;
+  final int length;
+  const StatisticSuccess({
+    required this.salary,
+    required this.length,
   });
 
   @override
-  List<Object> get props => [orders];
+  get props => [salary, length];
 }
 
-class GetUserStatisticsFailState extends StatisticState {
+final class StatisticFailure extends StatisticState {
   final String message;
-  
-  const GetUserStatisticsFailState({
-    required this.message
-  });
+
+  const StatisticFailure({required this.message});
 
   @override
-  List<Object> get props => [message];
+  get props => [message];
 }

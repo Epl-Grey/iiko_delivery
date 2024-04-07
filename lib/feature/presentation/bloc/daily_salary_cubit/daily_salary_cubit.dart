@@ -1,10 +1,6 @@
-// ignore_for_file: unused_local_variable
-
-import 'package:bloc/bloc.dart';
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-import 'package:iiko_delivery/feature/data/models/item_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iiko_delivery/feature/domain/entities/item_entity.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_order_items.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_user_orders_by_day.dart';
@@ -18,10 +14,10 @@ class DailySalaryCubit extends Cubit<DailySalaryState> {
   DailySalaryCubit({required this.getUserOrdersByDay, required this.getOrderItems})
       : super(DailySalaryInitial());
 
-  getDailySalary() async {
+  getDailySalary(DateTime today) async {
     emit(DailySalaryLoading());
 
-    final today = DateTime.now();
+
 
     final ordersResponse = await getUserOrdersByDay(OrdersByDayParams(
         year: today.year,

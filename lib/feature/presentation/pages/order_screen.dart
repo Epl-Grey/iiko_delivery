@@ -26,8 +26,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    context.read<OrderCubit>().getUserOrders(isDelivered);
-    context.read<DailySalaryCubit>().getDailySalary();
+    final today = DateTime.now();
+    context.read<OrderCubit>().getUserOrders(isDelivered, today);
+    context.read<DailySalaryCubit>().getDailySalary(today);
     context.read<OrdersCostCubit>().getOrdersCost(isDelivered);
     return Scaffold(
       appBar: AppBar(
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushReplacementNamed('/statistics');
+                    Navigator.of(context).pushNamed('/statistics');
                   },
                   child: Row(
                     // crossAxisAlignment: CrossAxisAlignment.end,
@@ -183,15 +184,17 @@ class _HomePageState extends State<HomePage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(60),
-                    foregroundColor: Color(0xFF78C4A4),
-                    backgroundColor: Color(0xFF78C4A4),
-                    surfaceTintColor: Color(0xFF78C4A4),
+                    minimumSize: const Size.fromHeight(60),
+                    foregroundColor: const Color(0xFF78C4A4),
+                    backgroundColor: const Color(0xFF78C4A4),
+                    surfaceTintColor:const  Color(0xFF78C4A4),
                   ),
                   onPressed: () async {
                     String telephoneNumber = '+2347012345678';
                     String telephoneUrl = "tel:$telephoneNumber";
+                    // ignore: deprecated_member_use
                     if (await canLaunch(telephoneUrl)) {
+                      // ignore: deprecated_member_use
                       await launch(telephoneUrl);
                     } else {
                       throw "Error occured trying to call that number.";
