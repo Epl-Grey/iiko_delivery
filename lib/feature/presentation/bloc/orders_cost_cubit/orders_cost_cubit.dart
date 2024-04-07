@@ -22,15 +22,7 @@ class OrdersCostCubit extends Cubit<OrdersCostState> {
   getOrdersCost(bool isDelivered) async {
     emit(OrdersCostLoading());
 
-    final today = DateTime.now();
-
-    final response = isDelivered
-        ? await getUserOrdersByDay(OrdersByDayParams(
-            year: today.year,
-            month: today.month,
-            day: today.day,
-            isDelivered: true))
-        : await getUserOrders(const OrderParams(isDelivered: false));
+    final response = await getUserOrders(const OrderParams());
 
     response.fold(
         (fail) => emit(OrdersCostFailure(message: fail.toString())),

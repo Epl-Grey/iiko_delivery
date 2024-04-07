@@ -14,16 +14,16 @@ class GetUserOrders extends UseCase<List<OrderEntity>, OrderParams>{
 
   @override
   Future<Either<Failure, List<OrderEntity>>> call(OrderParams params) async {
-    final response = await orderRepository.getUserOrders(params.isDelivered);
+    final response = await orderRepository.getUserOrders(isDelivered: params.isDelivered);
     return response;
   }
 }
 
 class OrderParams extends Equatable {
-  final bool isDelivered;
+  final bool? isDelivered;
 
   const OrderParams({
-    required this.isDelivered,
+    this.isDelivered,
   });
 
   @override
