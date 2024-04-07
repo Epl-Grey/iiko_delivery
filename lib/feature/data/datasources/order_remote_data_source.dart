@@ -2,7 +2,7 @@ import 'package:iiko_delivery/feature/data/models/order_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class OrderRemoteDataSource {
-  Future<List<OrderModel>> getUserOrders(bool isDelivered);
+  Future<List<OrderModel>> getUserOrders({bool? isDelivered});
   Future<void> setOrderIsDelivered(int id, bool isDelivered);
   Future<List<OrderModel>> getUserOrdersByDateRange(
       DateTime start, DateTime end,
@@ -15,12 +15,20 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
   OrderRemoteDataSourceImpl(this.supabaseClient);
 
   @override
-  Future<List<OrderModel>> getUserOrders(bool isDelivered) async {
-    final data = await supabaseClient
+  Future<List<OrderModel>> getUserOrders({bool? isDelivered}) async {
+    List<Map<String, dynamic>> data;
+    if(isDelivered == null){
+      data = await supabaseClient
+        .from('Orders')
+        .select()
+        .order('order_date', ascending: true);
+    }else {
+      data = await supabaseClient
         .from('Orders')
         .select()
         .eq('is_delivered', isDelivered)
         .order('order_date', ascending: true);
+    }
     return data.map((order) => OrderModel.fromJson(order)).toList();
   }
 

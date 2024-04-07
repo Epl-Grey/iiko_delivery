@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:iiko_delivery/feature/domain/entities/item_entity.dart';
+import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_order_items.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_user_orders.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_user_orders_by_day.dart';
@@ -23,15 +24,7 @@ class OrdersCostCubit extends Cubit<OrdersCostState> {
   getOrdersCost(bool isDelivered) async {
     emit(OrdersCostLoading());
 
-    final today = DateTime.now();
-
-    final response = isDelivered
-        ? await getUserOrdersByDay(OrdersByDayParams(
-            year: today.year,
-            month: today.month,
-            day: today.day,
-            isDelivered: true))
-        : await getUserOrders(const OrderParams(isDelivered: false));
+    final response = await getUserOrders(const OrderParams());
 
     response.fold(
         (fail) => emit(OrdersCostFailure(message: fail.toString())),
