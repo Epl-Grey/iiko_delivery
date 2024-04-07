@@ -38,7 +38,7 @@ class OrdersCostCubit extends Cubit<OrdersCostState> {
                 costs.putIfAbsent(order.id, () {
                   Decimal orderCost = Decimal.zero;
                   for(final item in itemsFromResponse){
-                    orderCost += item.cost;
+                    orderCost += item.cost * Decimal.fromInt(item.count);
                   }
                   return orderCost;
                 });

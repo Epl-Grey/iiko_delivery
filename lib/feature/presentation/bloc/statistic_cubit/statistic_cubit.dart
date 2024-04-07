@@ -40,7 +40,7 @@ class StatisticCubit extends Cubit<StatisticState> {
               (failure) => emit(StatisticFailure(message: failure.toString())),
               (itemsFromResponse) {
             for (var item in itemsFromResponse) {
-              someSalary += item.cost;
+              someSalary += item.cost * Decimal.fromInt(item.count);
             }
           });
         }

@@ -43,7 +43,7 @@ class DailySalaryCubit extends Cubit<DailySalaryState> {
         if(state is DailySalaryFailure) return;
         
         for(var item in items){
-          salary += item.cost;
+          salary += item.cost * Decimal.fromInt(item.count);
         }
         emit(DailySalarySuccess(salary: salary));
       }

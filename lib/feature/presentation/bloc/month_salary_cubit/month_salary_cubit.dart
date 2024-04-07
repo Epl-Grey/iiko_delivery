@@ -33,7 +33,7 @@ class MonthOrderCubit extends Cubit<MonthSalaryState> {
       }
 
       for (var item in items) {
-        salaryByMonth += item.cost;
+        salaryByMonth += item.cost * Decimal.fromInt(item.count);
       }
       emit(MonthSalarySuccess(salary: salaryByMonth));
     });

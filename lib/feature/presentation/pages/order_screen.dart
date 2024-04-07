@@ -86,7 +86,8 @@ class _HomePageState extends State<HomePage> {
                       BlocBuilder<DailySalaryCubit, DailySalaryState>(
                         builder: (context, state) {
                           if (state is DailySalarySuccess) {
-                            return Text(state.salary.toStringAsFixed(2),
+                            return Text(
+                              "${state.salary.toStringAsFixed(2)} ₽",
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 20,
