@@ -76,9 +76,9 @@ class _OrderListItemState extends State<OrderListItem> {
                         child: BlocBuilder<OrdersCostCubit, OrdersCostState>(
                           builder: (context, state) {
                             if (state is OrdersCostSuccess) {
-                              return const Text(
-                                ' ₽',
-                                style:  TextStyle(
+                              return Text(
+                                "${state.costs[widget.orderModel.id]!.toStringAsFixed(2)} ₽",
+                                style:  const TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
                                   fontFamily: 'Montserrat',
