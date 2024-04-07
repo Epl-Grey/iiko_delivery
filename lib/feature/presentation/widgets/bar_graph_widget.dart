@@ -73,7 +73,7 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
                         DateTime newDate = DateTime(
                             widget.selectedDate.year,
                             widget.selectedDate.month,
-                            groupIndex,
+                            groupIndex + 1,
                             widget.selectedDate.hour,
                             widget.selectedDate.minute,
                             widget.selectedDate.second,
@@ -106,7 +106,7 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
                     },
                   ),
                   alignment: BarChartAlignment.spaceAround,
-                  maxY: 10000,
+                  maxY: 5000,
                   titlesData: const FlTitlesData(
                     show: false,
                   ),
