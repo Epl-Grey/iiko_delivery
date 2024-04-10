@@ -2,8 +2,9 @@ import 'package:decimal/decimal.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_state.dart';
+
+import 'package:iiko_delivery/feature/presentation/bloc/dayily_order_cubit/daily_order_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/dayily_order_cubit/daily_order_state.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/order_list_item.dart';
 
 class BarGraphWidget extends StatefulWidget {
@@ -11,7 +12,7 @@ class BarGraphWidget extends StatefulWidget {
   final int length;
   final List<Decimal> salary;
 
-  BarGraphWidget({
+  const BarGraphWidget({
     super.key,
     required this.selectedDate,
     required this.length,
@@ -24,7 +25,7 @@ class BarGraphWidget extends StatefulWidget {
 
 class _BarGraphWidgetState extends State<BarGraphWidget> {
   late int showingTooltip;
-
+  late DateTime newDate = DateTime(1);
   @override
   void initState() {
     showingTooltip = -1;
@@ -55,6 +56,7 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<DailyOrderCubit>().getUserOrdersByDay(true, newDate);
     return Align(
       alignment: Alignment.topLeft,
       child: Column(
@@ -70,7 +72,7 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
                     enabled: true,
                     touchTooltipData: BarTouchTooltipData(
                       getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                        DateTime newDate = DateTime(
+                        newDate = DateTime(
                             widget.selectedDate.year,
                             widget.selectedDate.month,
                             groupIndex + 1,
@@ -79,7 +81,7 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
                             widget.selectedDate.second,
                             widget.selectedDate.millisecond,
                             widget.selectedDate.microsecond);
-                        context.read<OrderCubit>().getUserOrders(true, newDate);
+
                         return BarTooltipItem(
                             widget.salary[groupIndex].toString(),
                             const TextStyle(
@@ -120,14 +122,14 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
             ),
           ),
           Expanded(
-            child: BlocBuilder<OrderCubit, OrderState>(
+            child: BlocBuilder<DailyOrderCubit, DailyOrderState>(
               builder: (context, state) {
-                if (state is GetUserOrdersSuccessState) {
+                if (state is GetUserDailyOrdersSuccessState) {
                   return ListView.builder(
                       itemCount: state.orders.length,
                       itemBuilder: (ctx, index) =>
                           OrderListItem(orderModel: state.orders[index]));
-                } else if (state is GetUserOrdersFailState) {
+                } else if (state is GetUserDailyOrdersFailState) {
                   return Center(
                     child: Text(state.message),
                   );
@@ -137,7 +139,6 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
                   );
                 }
               },
-              // ),
             ),
           ),
         ],

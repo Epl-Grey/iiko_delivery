@@ -15,7 +15,9 @@ import 'package:iiko_delivery/feature/domain/usecases/get_user_orders.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_user_orders_by_day.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_user_orders_by_month.dart';
 import 'package:iiko_delivery/feature/domain/usecases/set_order_is_delivered.dart';
+
 import 'package:iiko_delivery/feature/presentation/bloc/daily_salary_cubit/daily_salary_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/dayily_order_cubit/daily_order_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/month_salary_cubit/month_salary_cubit.dart';
@@ -47,7 +49,7 @@ Future<void> init() async {
   sl.registerFactory<StatisticCubit>(
       () => StatisticCubit(getUserOrdersByMonth: sl(), getOrderItems: sl()));
   sl.registerFactory<MonthOrderCubit>(() => MonthOrderCubit(sl(), sl()));
-
+  sl.registerFactory<DailyOrderCubit>(() => DailyOrderCubit(sl()));
   // UseCases
   sl.registerLazySingleton<GetUserOrders>(
       () => GetUserOrders(orderRepository: sl()));

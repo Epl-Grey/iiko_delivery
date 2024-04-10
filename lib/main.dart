@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/daily_salary_cubit/daily_salary_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/dayily_order_cubit/daily_order_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/month_salary_cubit/month_salary_cubit.dart';
@@ -69,6 +70,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<MonthOrderCubit>(
           create: (context) => sl<MonthOrderCubit>(),
+        ),
+        BlocProvider<DailyOrderCubit>(
+          create: (context) => sl<DailyOrderCubit>(),
         ),
       ],
       child: MaterialApp(
