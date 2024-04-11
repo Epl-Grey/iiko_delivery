@@ -65,6 +65,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: iiko_delivery.apk
+          name: android-release
           path: build/app/outputs/apk/release/app-release.apk
+          compression-level: 0
           if-no-files-found: error
