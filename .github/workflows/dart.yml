@@ -9,8 +9,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  version:
-    name: Create version number
+  build:
+    name: Build Flutter project
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -29,23 +29,6 @@ jobs:
 
       - name: Create version.txt with nuGetVersion
         run: echo ${{ steps.gitversion.outputs.nuGetVersion  }} > version.txt
-
-      - name: Upload version.txt
-        uses: actions/upload-artifact@v2
-        with:
-          name: gitversion
-          path: version.txt
-  build:
-    name: Create Android Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      
-      # Downloading version number
-      - name: Get version.txt
-        uses: actions/download-artifact@v2
-        with:
-          name: gitversion
 
       - name: Create new file without newline char from version.txt
         run: tr -d '\n' < version.txt > version1.txt
