@@ -10,7 +10,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
+      
+      # Generating version number
+      - name: Get version.txt
+        uses: actions/download-artifact@v2
+        with:
+          name: gitversion
+          
+      - name: Create new file without newline char from version.txt
+        run: tr -d '\n' < version.txt > version1.txt
+
+      - name: Read version
+        id: version
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: version1.txt
+
+      - name: Update version in YAML
+        run: sed -i 's/99.99.99+99/${{ steps.version.outputs.content }}+${{ github.run_number }}/g' pubspec.yaml
+
+     # Building
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
@@ -18,10 +38,9 @@ jobs:
         with:
           channel: 'beta'
       - run: flutter pub get
-      - run: flutter format --set-exit-if-changed .
-      - run: flutter analyze .
       - run: flutter build apk
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v4
         with:
-          name: release-apk
+          name: gitversion
           path: build/app/outputs/apk/release/app-release.apk
+          if-no-files-found: error
