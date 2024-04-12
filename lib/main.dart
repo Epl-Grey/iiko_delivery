@@ -6,6 +6,7 @@ import 'package:iiko_delivery/feature/presentation/bloc/dayily_order_cubit/daily
 import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/month_salary_cubit/month_salary_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/set_delivered_cubit/set_delivered_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/statistic_cubit/statistic_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
@@ -73,6 +74,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<DailyOrderCubit>(
           create: (context) => sl<DailyOrderCubit>(),
+        ),
+        BlocProvider<SetDeliveredCubit>(
+          create: (context) => sl<SetDeliveredCubit>(),
         ),
       ],
       child: MaterialApp(

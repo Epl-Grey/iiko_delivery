@@ -6,6 +6,8 @@ import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.da
 import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_state.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_state.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/set_delivered_cubit/set_delivered_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/set_delivered_cubit/set_delivered_state.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/item_list_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,7 +22,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   @override
   Widget build(BuildContext context) {
     final order = ModalRoute.of(context)!.settings.arguments as OrderEntity;
-
+    int orderId = order.id;
+    print('orderId ${orderId}');
     context.read<ItemCubit>().getOrderItems(order.id);
     context.read<LocationCubit>().getPhoneLocation(order.address);
 
@@ -29,11 +32,11 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration.empty, "assets/deliveryIcon.png")
         .then((icon) => address = icon);
-        BitmapDescriptor.fromAssetImage(
-            ImageConfiguration.empty, "assets/home.png")
+    BitmapDescriptor.fromAssetImage(ImageConfiguration.empty, "assets/home.png")
         .then((icon) => home = icon);
 
-    void launchGoogleMapsNavigation(double startLat, double startLong, double destinationLat, double destinationLong) async {
+    void launchGoogleMapsNavigation(double startLat, double startLong,
+        double destinationLat, double destinationLong) async {
       // Начальная точка
 
       String googleMapsUrl =
@@ -61,7 +64,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
               child: BlocBuilder<LocationCubit, LocationState>(
                 builder: (context, state) {
                   if (state is GetLocationSuccessState) {
-                    
                     return GoogleMap(
                       initialCameraPosition: CameraPosition(
                           target: LatLng(state.position.locations[0].latitude,
@@ -107,7 +109,11 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                       return IconButton(
                         iconSize: 50,
                         onPressed: () {
-                          launchGoogleMapsNavigation(state.position.phone.latitude, state.position.phone.longitude, state.position.locations[0].latitude, state.position.locations[0].longitude);
+                          launchGoogleMapsNavigation(
+                              state.position.phone.latitude,
+                              state.position.phone.longitude,
+                              state.position.locations[0].latitude,
+                              state.position.locations[0].longitude);
                         },
                         icon: const Icon(Icons.map_sharp),
                         color: Colors.black,
@@ -151,6 +157,34 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
               'Состав заказа',
               style: TextStyle(color: Colors.black, fontSize: 30),
             ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(60),
+                    foregroundColor: const Color(0xFF78C4A4),
+                    backgroundColor: const Color(0xFF78C4A4),
+                    surfaceTintColor: const Color(0xFF78C4A4),
+                  ),
+                  onPressed: () => context
+                      .read<SetDeliveredCubit>()
+                      .setOrderIsDelivered(orderId, true),
+                  child: const Text(
+                    'Доставлено',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w600,
+                      height: 0.07,
+                      letterSpacing: 0.09,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             BlocBuilder<ItemCubit, ItemState>(
               builder: (context, state) {
                 if (state is GetOrderItemsSuccessState) {
@@ -170,6 +204,24 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   );
                 }
               },
+            ),
+            BlocListener<SetDeliveredCubit, SetDeliveredState>(
+              listener: (context, state) {
+                if (state is SetDeliveredLoaded) {
+                  print('orderId $orderId, \n isdelivered true');
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, "/orders");
+
+                } else if (state is SetDeliveredError) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Ошибка!'),
+                      backgroundColor: Colors.redAccent,
+                    ),
+                  );
+                }
+              },
+              child: const SizedBox(),
             ),
           ],
         ),
