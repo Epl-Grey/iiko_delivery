@@ -9,6 +9,7 @@ import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_
 import 'package:iiko_delivery/feature/presentation/bloc/set_delivered_cubit/set_delivered_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/set_delivered_cubit/set_delivered_state.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/item_list_widget.dart';
+import 'package:swipeable_button_view/swipeable_button_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailPage extends StatefulWidget {
@@ -19,6 +20,7 @@ class OrderDetailPage extends StatefulWidget {
 }
 
 class _OrderDetailPageState extends State<OrderDetailPage> {
+  bool isFinished = false;
   @override
   Widget build(BuildContext context) {
     final order = ModalRoute.of(context)!.settings.arguments as OrderEntity;
@@ -157,34 +159,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
               'Состав заказа',
               style: TextStyle(color: Colors.black, fontSize: 30),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(60),
-                    foregroundColor: const Color(0xFF78C4A4),
-                    backgroundColor: const Color(0xFF78C4A4),
-                    surfaceTintColor: const Color(0xFF78C4A4),
-                  ),
-                  onPressed: () => context
-                      .read<SetDeliveredCubit>()
-                      .setOrderIsDelivered(orderId, true),
-                  child: const Text(
-                    'Доставлено',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w600,
-                      height: 0.07,
-                      letterSpacing: 0.09,
-                    ),
-                  ),
-                ),
-              ),
-            ),
             BlocBuilder<ItemCubit, ItemState>(
               builder: (context, state) {
                 if (state is GetOrderItemsSuccessState) {
@@ -205,13 +179,33 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 }
               },
             ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SwipeableButtonView(
+                  buttonText: "Доставлен",
+                  buttonWidget: Container(
+                    child: const Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  activeColor: const Color(0xFF78C4A4),
+                  isFinished: isFinished,
+                  onWaitingProcess: () {
+                    Future.delayed(Duration(seconds: 2), () {
+                      context
+                          .read<SetDeliveredCubit>()
+                          .setOrderIsDelivered(orderId, true);
+                    });
+                  },
+                  onFinish: () async {}),
+            ),
             BlocListener<SetDeliveredCubit, SetDeliveredState>(
               listener: (context, state) {
                 if (state is SetDeliveredLoaded) {
                   print('orderId $orderId, \n isdelivered true');
                   Navigator.pop(context);
                   Navigator.pushNamed(context, "/orders");
-
                 } else if (state is SetDeliveredError) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(

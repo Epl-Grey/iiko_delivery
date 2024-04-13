@@ -1,5 +1,5 @@
 import 'package:iiko_delivery/feature/data/models/order_model.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+ import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class OrderRemoteDataSource {
   Future<List<OrderModel>> getUserOrders({bool? isDelivered});
@@ -31,22 +31,22 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
           .order('order_date', ascending: true);
     }
 
-    supabaseClient
-        .channel('public:Orders')
-        .onPostgresChanges(
-            event: PostgresChangeEvent.all,
-            schema: 'public',
-            table: 'Orders',
-            callback: (payload) {
-              //  Map<String, dynamic> payloadMap = payload.
-              // getUserOrders(isDelivered: isDelivered);
-              // print('change --> ${payload.newRecord}');
-              // print('length --> ${data.length}');
-              // print('isDelivered --> $isDelivered');
-              //     data.add(payload.newRecord);
-              getUserOrders(isDelivered: isDelivered);
-            })
-        .subscribe();
+    // supabaseClient
+    //     .channel('public:Orders')
+    //     .onPostgresChanges(
+    //         event: PostgresChangeEvent.all,
+    //         schema: 'public',
+    //         table: 'Orders',
+    //         callback: (payload) {
+    //           //  Map<String, dynamic> payloadMap = payload.
+    //           // getUserOrders(isDelivered: isDelivered);
+    //           // print('change --> ${payload.newRecord}');
+    //           // print('length --> ${data.length}');
+    //           // print('isDelivered --> $isDelivered');
+    //           //     data.add(payload.newRecord);
+
+    //         })
+    //     .subscribe();
 
     return data.map((order) => OrderModel.fromJson(order)).toList();
   }

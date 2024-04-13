@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/dayily_order_cubit/daily_order_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/dayily_order_cubit/daily_order_state.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/order_list_item.dart';
+import 'package:intl/intl.dart';
 
 class BarGraphWidget extends StatefulWidget {
   final DateTime selectedDate;
@@ -58,35 +59,176 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
     const style = TextStyle(
       color: Colors.black,
       fontWeight: FontWeight.bold,
-      fontSize: 14,
+      fontSize: 20,
     );
+    List<String> daysOfWeekList = [];
     Widget text;
+    for (int i = 0;
+        i <
+            DateTime(widget.selectedDate.year, widget.selectedDate.month + 1, 0)
+                .day;
+        i++) {
+      DateTime currentDate =
+          DateTime(widget.selectedDate.year, widget.selectedDate.month, i + 1);
+      String dayOfWeek = DateFormat('EEEE').format(currentDate);
+      if (dayOfWeek == 'Monday') {
+        dayOfWeek = 'Пн';
+      } else if (dayOfWeek == 'Tuesday') {
+        dayOfWeek = 'Вт';
+      } else if (dayOfWeek == 'Wednesday') {
+        dayOfWeek = 'Ср';
+      } else if (dayOfWeek == 'Thursday') {
+        dayOfWeek = 'Чт';
+      } else if (dayOfWeek == 'Friday') {
+        dayOfWeek = 'Пт';
+      } else if (dayOfWeek == 'Saturday') {
+        dayOfWeek = 'Сб';
+      } else if (dayOfWeek == 'Sunday') {
+        dayOfWeek = 'Вс';
+      }
+
+      daysOfWeekList.add(dayOfWeek);
+    }
     switch (value.toInt()) {
       case 0:
-        text = const Text('M', style: style);
+        text = Text(
+            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
         break;
       case 1:
-        text = const Text('T', style: style);
+        text = Text(
+            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
         break;
       case 2:
-        text = const Text('W', style: style);
+        text = Text(
+            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
         break;
       case 3:
-        text = const Text('T', style: style);
+        text = Text(
+            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
         break;
       case 4:
-        text = const Text('F', style: style);
+        text = Text(
+            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
         break;
       case 5:
-        text = const Text('S', style: style);
+        text = Text(
+            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
         break;
       case 6:
-        text = const Text('S', style: style);
+        text = Text(
+            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 7:
+        text = Text(
+            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 8:
+        text = Text(
+            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 9:
+        text = Text(
+            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 10:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 11:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 12:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 13:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 14:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 15:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 16:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 17:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 18:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 19:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 20:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 21:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 22:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 23:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 24:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 25:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 26:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 27:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 28:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 29:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
+        break;
+      case 30:
+        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
+            style: style);
         break;
       default:
         text = const Text('', style: style);
         break;
     }
+
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 16,
@@ -96,7 +238,6 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.read<DailyOrderCubit>().getUserOrdersByDay(true, newDate);
     return Align(
       alignment: Alignment.topLeft,
       child: Column(
@@ -112,22 +253,23 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
                     enabled: true,
                     touchTooltipData: BarTouchTooltipData(
                       getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                        newDate = DateTime(
-                            widget.selectedDate.year,
-                            widget.selectedDate.month,
-                            groupIndex + 1,
-                            widget.selectedDate.hour,
-                            widget.selectedDate.minute,
-                            widget.selectedDate.second,
-                            widget.selectedDate.millisecond,
-                            widget.selectedDate.microsecond);
-
+                        context.read<DailyOrderCubit>().getUserOrdersByDay(
+                            true,
+                            DateTime(
+                                widget.selectedDate.year,
+                                widget.selectedDate.month,
+                                groupIndex + 1,
+                                widget.selectedDate.hour,
+                                widget.selectedDate.minute,
+                                widget.selectedDate.second,
+                                widget.selectedDate.millisecond,
+                                widget.selectedDate.microsecond));
                         return BarTooltipItem(
-                            widget.salary[groupIndex].toString(),
+                            '${widget.salary[groupIndex].toString()}₽',
                             const TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 40));
+                                fontSize: 20));
                       },
                       getTooltipColor: (group) => Colors.white,
                     ),
@@ -167,10 +309,10 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
                         ),
                       ),
                       topTitles: AxisTitles(
-                        sideTitles: SideTitles(
+                          sideTitles: SideTitles(
                         showTitles: true,
                         getTitlesWidget: getTitles,
-                        reservedSize: 38,
+                        reservedSize: 68,
                       ))),
                   borderData: FlBorderData(
                     show: false,
@@ -194,9 +336,7 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
                     child: Text(state.message),
                   );
                 } else {
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  );
+                  return const Center();
                 }
               },
             ),
