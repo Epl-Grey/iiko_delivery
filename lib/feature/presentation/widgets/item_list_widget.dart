@@ -23,24 +23,21 @@ class _OrderListItemState extends State<OrderItemsList> {
       curve: Curves.easeInCubic,
       reverseDuration: const Duration(milliseconds: 200),
       child: Container(
-        margin: const EdgeInsets.all(5.0),
-        padding: const EdgeInsets.all(10.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          border: Border.all(width: 1, color: Colors.grey),
-          // boxShadow: const [BoxShadow(offset: Offset(2,2),)]
-        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
-                child: Column(
+                child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   widget.itemModel.name,
                   style: const TextStyle(
-                    color: Colors.black,
+                    color: Color(0xFFAFA8A1),
+                    fontSize: 18,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w500,
+                    height: 0,
                   ),
                 ),
                 Text(
