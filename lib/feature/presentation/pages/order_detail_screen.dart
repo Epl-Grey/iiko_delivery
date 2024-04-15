@@ -10,7 +10,6 @@ import 'package:iiko_delivery/feature/presentation/bloc/set_delivered_cubit/set_
 import 'package:iiko_delivery/feature/presentation/bloc/set_delivered_cubit/set_delivered_state.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/item_list_widget.dart';
 import 'package:swipeable_button_view/swipeable_button_view.dart';
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailPage extends StatefulWidget {
@@ -26,7 +25,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   Widget build(BuildContext context) {
     final order = ModalRoute.of(context)!.settings.arguments as OrderEntity;
     int orderId = order.id;
-    print('orderId ${orderId}');
     context.read<ItemCubit>().getOrderItems(order.id);
     context.read<LocationCubit>().getPhoneLocation(order.address);
 
@@ -72,131 +70,199 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
         backgroundColor: const Color(0xFFFAF7F5),
       ),
       body: Container(
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height,
-        ),
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 400,
-              width: 400,
-              child: BlocBuilder<LocationCubit, LocationState>(
-                builder: (context, state) {
-                  if (state is GetLocationSuccessState) {
-                    return GoogleMap(
-                      initialCameraPosition: CameraPosition(
-                          target: LatLng(state.position.locations[0].latitude,
-                              state.position.locations[0].longitude),
-                          zoom: 15.5),
-                      markers: {
-                        Marker(
-                            markerId: const MarkerId('phone'),
-                            icon: home,
-                            position: LatLng(state.position.phone.latitude,
-                                state.position.phone.longitude)),
-                        Marker(
-                            markerId: const MarkerId('order'),
-                            icon: address,
-                            position: LatLng(
-                                state.position.locations[0].latitude,
-                                state.position.locations[0].longitude)),
-                      },
-                    );
-                  } else if (state is GetLocationFailState) {
-                    return Center(
-                      child: Text(state.message),
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator.adaptive(),
-                    );
-                  }
-                },
-              ),
+        color: Color(0xFFFAF7F5),
+        child: Padding(
+          padding: EdgeInsets.only(right: 20, left: 20, top: 16),
+          child: Container(
+            color: Color(0xFFFAF7F5),
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height,
             ),
-            Text(
-              order.address,
-              style: const TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
+            child: Column(
               children: <Widget>[
-                BlocBuilder<LocationCubit, LocationState>(
-                  builder: (context, state) {
-                    if (state is GetLocationSuccessState) {
-                      return IconButton(
-                        iconSize: 50,
-                        onPressed: () {
-                          launchGoogleMapsNavigation(
-                              state.position.phone.latitude,
-                              state.position.phone.longitude,
-                              state.position.locations[0].latitude,
-                              state.position.locations[0].longitude);
-                        },
-                        icon: const Icon(Icons.map_sharp),
+                SizedBox(
+                  height: 250,
+                  child: BlocBuilder<LocationCubit, LocationState>(
+                    builder: (context, state) {
+                      if (state is GetLocationSuccessState) {
+                        return GoogleMap(
+                          initialCameraPosition: CameraPosition(
+                              target: LatLng(
+                                  state.position.locations[0].latitude,
+                                  state.position.locations[0].longitude),
+                              zoom: 15.5),
+                          markers: {
+                            Marker(
+                                markerId: const MarkerId('phone'),
+                                icon: home,
+                                position: LatLng(state.position.phone.latitude,
+                                    state.position.phone.longitude)),
+                            Marker(
+                                markerId: const MarkerId('order'),
+                                icon: address,
+                                position: LatLng(
+                                    state.position.locations[0].latitude,
+                                    state.position.locations[0].longitude)),
+                          },
+                        );
+                      } else if (state is GetLocationFailState) {
+                        return Center(
+                          child: Text(state.message),
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        );
+                      }
+                    },
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      order.address,
+                      style: const TextStyle(
                         color: Colors.black,
-                      );
-                    } else if (state is GetLocationFailState) {
+                        fontSize: 18,
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                        letterSpacing: 0.18,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    BlocBuilder<LocationCubit, LocationState>(
+                      builder: (context, state) {
+                        if (state is GetLocationSuccessState) {
+                          return IconButton(
+                            iconSize: 50,
+                            onPressed: () {
+                              launchGoogleMapsNavigation(
+                                  state.position.phone.latitude,
+                                  state.position.phone.longitude,
+                                  state.position.locations[0].latitude,
+                                  state.position.locations[0].longitude);
+                            },
+                            icon: const Icon(Icons.map_sharp),
+                            color: Colors.black,
+                          );
+                        } else if (state is GetLocationFailState) {
+                          return Center(
+                            child: IconButton(
+                              iconSize: 50,
+                              onPressed: () {},
+                              icon: const Icon(Icons.map_sharp),
+                              color: Colors.grey.shade600,
+                            ),
+                          );
+                        } else {
+                          return Center(
+                            child: IconButton(
+                              iconSize: 50,
+                              onPressed: () {},
+                              icon: const Icon(Icons.map_sharp),
+                              color: Colors.grey.shade600,
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                    IconButton(
+                      iconSize: 50,
+                      onPressed: () {},
+                      icon: const Icon(Icons.phone_in_talk_rounded),
+                      color: Colors.black,
+                    ),
+                    IconButton(
+                      iconSize: 50,
+                      onPressed: () {},
+                      icon: const Icon(Icons.phone),
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+                const Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      'Состав заказа',
+                      style: TextStyle(
+                        color: Color(0xFF222222),
+                        fontSize: 18,
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    ),
+                  ],
+                ),
+                BlocBuilder<ItemCubit, ItemState>(
+                  builder: (context, state) {
+                    if (state is GetOrderItemsSuccessState) {
+                      return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: state.items.length,
+                          itemBuilder: (ctx, index) =>
+                              OrderItemsList(itemModel: state.items[index]));
+                    } else if (state is GetOrderItemsFailState) {
                       return Center(
-                        child: IconButton(
-                          iconSize: 50,
-                          onPressed: () {},
-                          icon: const Icon(Icons.map_sharp),
-                          color: Colors.grey.shade600,
-                        ),
+                        child: Text(state.message),
                       );
                     } else {
-                      return Center(
-                        child: IconButton(
-                          iconSize: 50,
-                          onPressed: () {},
-                          icon: const Icon(Icons.map_sharp),
-                          color: Colors.grey.shade600,
-                        ),
+                      return const Center(
+                        child: CircularProgressIndicator.adaptive(),
                       );
                     }
                   },
                 ),
-                IconButton(
-                  iconSize: 50,
-                  onPressed: () {},
-                  icon: const Icon(Icons.phone_in_talk_rounded),
-                  color: Colors.black,
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SwipeableButtonView(
+                      buttonText: "Доставлен",
+                      buttonWidget: Container(
+                        child: const Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      activeColor: const Color(0xFF78C4A4),
+                      isFinished: isFinished,
+                      onWaitingProcess: () {
+                        Future.delayed(Duration(seconds: 2), () {
+                          context
+                              .read<SetDeliveredCubit>()
+                              .setOrderIsDelivered(orderId, true);
+                        });
+                      },
+                      onFinish: () async {}),
                 ),
-                IconButton(
-                  iconSize: 50,
-                  onPressed: () {},
-                  icon: const Icon(Icons.phone),
-                  color: Colors.black,
+                BlocListener<SetDeliveredCubit, SetDeliveredState>(
+                  listener: (context, state) {
+                    if (state is SetDeliveredLoaded) {
+                      print('orderId $orderId, \n isdelivered true');
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "/orders");
+                    } else if (state is SetDeliveredError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Ошибка!'),
+                          backgroundColor: Colors.redAccent,
+                        ),
+                      );
+                    }
+                  },
+                  child: const SizedBox(),
                 ),
               ],
             ),
-            const Text(
-              'Состав заказа',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            BlocBuilder<ItemCubit, ItemState>(
-              builder: (context, state) {
-                if (state is GetOrderItemsSuccessState) {
-                  return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: state.items.length,
-                      itemBuilder: (ctx, index) =>
-                          OrderItemsList(itemModel: state.items[index]));
-                } else if (state is GetOrderItemsFailState) {
-                  return Center(
-                    child: Text(state.message),
-                  );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  );
-                }
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );

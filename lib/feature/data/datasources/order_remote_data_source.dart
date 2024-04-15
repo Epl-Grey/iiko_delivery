@@ -1,5 +1,5 @@
 import 'package:iiko_delivery/feature/data/models/order_model.dart';
- import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class OrderRemoteDataSource {
   Future<List<OrderModel>> getUserOrders({bool? isDelivered});
@@ -7,6 +7,7 @@ abstract class OrderRemoteDataSource {
   Future<List<OrderModel>> getUserOrdersByDateRange(
       DateTime start, DateTime end,
       {bool? isDelivered});
+  RealtimeChannel listenToUserOrdersChanges(String channel, void Function() callback);
 }
 
 class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
@@ -31,39 +32,23 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
           .order('order_date', ascending: true);
     }
 
-    // supabaseClient
-    //     .channel('public:Orders')
-    //     .onPostgresChanges(
-    //         event: PostgresChangeEvent.all,
-    //         schema: 'public',
-    //         table: 'Orders',
-    //         callback: (payload) {
-    //           //  Map<String, dynamic> payloadMap = payload.
-    //           // getUserOrders(isDelivered: isDelivered);
-    //           // print('change --> ${payload.newRecord}');
-    //           // print('length --> ${data.length}');
-    //           // print('isDelivered --> $isDelivered');
-    //           //     data.add(payload.newRecord);
-
-    //         })
-    //     .subscribe();
-
     return data.map((order) => OrderModel.fromJson(order)).toList();
   }
 
-  // @override
-  // RealtimeChannel listenToUserOrdersChanges() {
-  //   return supabaseClient
-  //       .channel('public:Orders')
-  //       .onPostgresChanges(
-  //           event: PostgresChangeEvent.all,
-  //           schema: 'public',
-  //           table: 'Orders',
-  //           callback: (payload) {
-  //             print('Change received: ${payload.toString()}');
-  //           })
-  //       .subscribe();
-  // }
+  @override
+  RealtimeChannel listenToUserOrdersChanges(
+      String channel, void Function() callback) {
+    var listen = supabaseClient
+        .channel('public:$channel')
+        .onPostgresChanges(
+            event: PostgresChangeEvent.all,
+            schema: 'public',
+            table: channel,
+            callback: (payload) => callback)
+        .subscribe();
+    print('listen --> $listen');
+    return listen;
+  }
 
   @override
   Future<void> setOrderIsDelivered(int id, bool isDelivered) async {

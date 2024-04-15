@@ -22,7 +22,7 @@ class OrderCubit extends Cubit<OrderState> {
             day: today.day,
             isDelivered: true))
         : await getUserOrdersUseCase(const OrderParams(isDelivered: false));
-    response.fold(
+    response.fold( 
         (fail) => emit(GetUserOrdersFailState(message: fail.toString())),
         (success) => emit(GetUserOrdersSuccessState(orders: success)));
   }
