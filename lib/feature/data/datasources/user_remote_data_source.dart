@@ -2,6 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class UserRemoteDataSources {
   Future<AuthResponse> signInUser(String email, String password);
+  Future<void> signOutUser();
 }
 
 class UserRemoteDataSourcesImpl extends UserRemoteDataSources {
@@ -16,4 +17,10 @@ class UserRemoteDataSourcesImpl extends UserRemoteDataSources {
       password: password,
     );
   }
+
+  @override
+  Future<void> signOutUser() async {
+    return await supabaseClient.auth.signOut();
+  }
+  
 }

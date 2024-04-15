@@ -22,6 +22,7 @@ import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.da
 import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/month_salary_cubit/month_salary_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/set_delivered_cubit/set_delivered_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/sign_out_cubit/sign_out_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/statistic_cubit/statistic_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
 
@@ -53,6 +54,7 @@ Future<void> init() async {
   sl.registerFactory<DailyOrderCubit>(() => DailyOrderCubit(sl()));
   sl.registerFactory<SetDeliveredCubit>(
       () => SetDeliveredCubit(setOrderIsDeliveredUseCase: sl()));
+  sl.registerFactory<SignOutUserCubit>(() => sl());
   // UseCases
   sl.registerLazySingleton<GetUserOrders>(
       () => GetUserOrders(orderRepository: sl()));

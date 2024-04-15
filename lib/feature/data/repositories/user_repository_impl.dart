@@ -22,5 +22,17 @@ class UserRepositoryImpl extends UserRepository {
       return Left(ServerFailure(message: error.toString()));
     }
   }
+  
+  @override
+  Future<Either<Failure, void>> signOut() async{
+    try {
+          final respone = await userRemoteDataSources.signOutUser();
+    return Right(respone);
+    } on ServerFailure catch(error) {
+      return Left(ServerFailure(message: error.message));
+    } catch(error){
+      return Left(ServerFailure(message: error.toString()));
+    }
+  }
 }
 

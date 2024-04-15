@@ -56,9 +56,9 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "Номер заказа",
-          style: TextStyle(
+        title: Text(
+          "Номер заказа | $orderId",
+          style: const TextStyle(
             color: Color(0xFF191817),
             fontSize: 20,
             fontFamily: 'Nunito',
@@ -67,15 +67,19 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
           ),
         ),
         leading: IconButton(
-            onPressed: () {}, icon: const Icon(Icons.exit_to_app_outlined)),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, "/orders");
+            },
+            icon: const Icon(Icons.exit_to_app_outlined)),
         backgroundColor: const Color(0xFFFAF7F5),
       ),
       body: Container(
-        color: Color(0xFFFAF7F5),
+        color: const Color(0xFFFAF7F5),
         child: Padding(
           padding: EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 20),
           child: Container(
-            color: Color(0xFFFAF7F5),
+            color: const Color(0xFFFAF7F5),
             constraints: BoxConstraints(
               maxHeight: MediaQuery.of(context).size.height,
             ),

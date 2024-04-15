@@ -46,7 +46,7 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
                 width: 50,
                 borderRadius: BorderRadius.circular(5),
                 color: showingTooltip == i
-                    ? Colors.green
+                    ? const Color(0xFF78C4A4)
                     : Colors.blueGrey.shade100),
           ]);
       barDataList.add(barData);
@@ -253,17 +253,7 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
                     enabled: true,
                     touchTooltipData: BarTouchTooltipData(
                       getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                        context.read<DailyOrderCubit>().getUserOrdersByDay(
-                            true,
-                            DateTime(
-                                widget.selectedDate.year,
-                                widget.selectedDate.month,
-                                groupIndex + 1,
-                                widget.selectedDate.hour,
-                                widget.selectedDate.minute,
-                                widget.selectedDate.second,
-                                widget.selectedDate.millisecond,
-                                widget.selectedDate.microsecond));
+
                         return BarTooltipItem(
                             '${widget.salary[groupIndex].toString()}₽',
                             const TextStyle(
@@ -284,6 +274,17 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
                             showingTooltip = -1;
                           } else {
                             showingTooltip = x;
+                          context.read<DailyOrderCubit>().getUserOrdersByDay(
+                            true,
+                            DateTime(
+                                widget.selectedDate.year,
+                                widget.selectedDate.month,
+                                response.spot!.touchedBarGroupIndex + 1,
+                                widget.selectedDate.hour,
+                                widget.selectedDate.minute,
+                                widget.selectedDate.second,
+                                widget.selectedDate.millisecond,
+                                widget.selectedDate.microsecond));
                           }
                         });
                       }

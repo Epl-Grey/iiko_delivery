@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/daily_salary_cubit/daily_salary_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/sign_out_cubit/sign_out_cubit.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/sign_out_cubit/sign_out_state.dart';
 import 'package:intl/intl.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_state.dart';
@@ -26,8 +28,6 @@ class _HomePageState extends State<HomePage> {
   late bool isDelivered = false;
   final today = DateTime.now();
 
-
-
   @override
   Widget build(BuildContext context) {
     context.read<OrderCubit>().getUserOrders(isDelivered, today);
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
             schema: 'public',
             table: 'Orders',
             callback: (payload) {
-              context.read<OrderCubit>().getUserOrders(isDelivered, today);
+              context.read<SignOutUserCubit>().signOutUser();
               print('callback');
             })
         .subscribe();
@@ -59,7 +59,10 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         leading: IconButton(
-            onPressed: () {}, icon: const Icon(Icons.exit_to_app_outlined)),
+            onPressed: () {
+              context.read<OrdersCostCubit>().getOrdersCost(isDelivered);
+            },
+            icon: const Icon(Icons.exit_to_app_outlined)),
         backgroundColor: const Color(0xFFFAF7F5),
       ),
       body: Container(
@@ -228,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
