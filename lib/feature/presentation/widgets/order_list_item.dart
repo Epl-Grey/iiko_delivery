@@ -78,10 +78,10 @@ class _OrderListItemState extends State<OrderListItem> {
                             if (state is OrdersCostSuccess) {
                               return Text(
                                 "${state.costs[widget.orderModel.id]!.toStringAsFixed(2)} ₽",
-                                style:  const TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
-                                  fontFamily: 'Montserrat',
+                                  fontFamily: 'Nunito',
                                   fontWeight: FontWeight.w400,
                                   height: 0,
                                 ),
