@@ -8,6 +8,7 @@ import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_state.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/order_list_item.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/segment_order.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
@@ -23,13 +24,27 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int? groupValue = 0;
   late bool isDelivered = false;
+  final today = DateTime.now();
+
+
 
   @override
   Widget build(BuildContext context) {
-    final today = DateTime.now();
     context.read<OrderCubit>().getUserOrders(isDelivered, today);
     context.read<DailySalaryCubit>().getDailySalary(today);
     context.read<OrdersCostCubit>().getOrdersCost(isDelivered);
+    var listen = Supabase.instance.client
+        .channel('public:Orders')
+        .onPostgresChanges(
+            event: PostgresChangeEvent.all,
+            schema: 'public',
+            table: 'Orders',
+            callback: (payload) {
+              context.read<OrderCubit>().getUserOrders(isDelivered, today);
+              print('callback');
+            })
+        .subscribe();
+    print('listen changes --> $listen');
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -86,8 +101,7 @@ class _HomePageState extends State<HomePage> {
                       BlocBuilder<DailySalaryCubit, DailySalaryState>(
                         builder: (context, state) {
                           if (state is DailySalarySuccess) {
-                            return Text(
-                              "${state.salary.toStringAsFixed(2)} ₽",
+                            return Text("${state.salary.toStringAsFixed(2)} ₽",
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 20,
@@ -188,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                     minimumSize: const Size.fromHeight(60),
                     foregroundColor: const Color(0xFF78C4A4),
                     backgroundColor: const Color(0xFF78C4A4),
-                    surfaceTintColor:const  Color(0xFF78C4A4),
+                    surfaceTintColor: const Color(0xFF78C4A4),
                   ),
                   onPressed: () async {
                     String telephoneNumber = '+2347012345678';

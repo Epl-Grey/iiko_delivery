@@ -50,6 +50,7 @@ dependencies:
   decimal: ^2.3.3
   fl_chart: ^0.67.0
   url_launcher: ^6.2.5
+  swipeable_button_view: ^0.0.2
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,5 @@
 import 'package:iiko_delivery/feature/data/models/order_model.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+ import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class OrderRemoteDataSource {
   Future<List<OrderModel>> getUserOrders({bool? isDelivered});
@@ -17,26 +17,62 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
   @override
   Future<List<OrderModel>> getUserOrders({bool? isDelivered}) async {
     List<Map<String, dynamic>> data;
-    if(isDelivered == null){
+
+    if (isDelivered == null) {
       data = await supabaseClient
-        .from('Orders')
-        .select()
-        .order('order_date', ascending: true);
-    }else {
+          .from('Orders')
+          .select()
+          .order('order_date', ascending: true);
+    } else {
       data = await supabaseClient
-        .from('Orders')
-        .select()
-        .eq('is_delivered', isDelivered)
-        .order('order_date', ascending: true);
+          .from('Orders')
+          .select()
+          .eq('is_delivered', isDelivered)
+          .order('order_date', ascending: true);
     }
+
+    // supabaseClient
+    //     .channel('public:Orders')
+    //     .onPostgresChanges(
+    //         event: PostgresChangeEvent.all,
+    //         schema: 'public',
+    //         table: 'Orders',
+    //         callback: (payload) {
+    //           //  Map<String, dynamic> payloadMap = payload.
+    //           // getUserOrders(isDelivered: isDelivered);
+    //           // print('change --> ${payload.newRecord}');
+    //           // print('length --> ${data.length}');
+    //           // print('isDelivered --> $isDelivered');
+    //           //     data.add(payload.newRecord);
+
+    //         })
+    //     .subscribe();
+
     return data.map((order) => OrderModel.fromJson(order)).toList();
   }
 
+  // @override
+  // RealtimeChannel listenToUserOrdersChanges() {
+  //   return supabaseClient
+  //       .channel('public:Orders')
+  //       .onPostgresChanges(
+  //           event: PostgresChangeEvent.all,
+  //           schema: 'public',
+  //           table: 'Orders',
+  //           callback: (payload) {
+  //             print('Change received: ${payload.toString()}');
+  //           })
+  //       .subscribe();
+  // }
+
   @override
   Future<void> setOrderIsDelivered(int id, bool isDelivered) async {
-    supabaseClient
+    final List<Map<String, dynamic>> data = await supabaseClient
         .from("Orders")
-        .update({'is_delivered': isDelivered}).eq('id', id);
+        .update({'is_delivered': isDelivered})
+        .eq('order_number', id)
+        .select();
+    print('data --> $data');
     return;
   }
 
@@ -69,7 +105,6 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
     //                              .lt('order_date', end)
     //                              .eq('is_delivered', true)
     //                              .explain());
-
 
     return data.map((order) => OrderModel.fromJson(order)).toList();
   }

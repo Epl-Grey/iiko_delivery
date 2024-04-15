@@ -48,7 +48,11 @@ class _StatisticaPageState extends State<StatisticaPage> {
             ),
           ),
           leading: IconButton(
-              onPressed: () {}, icon: const Icon(Icons.exit_to_app_outlined)),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/orders");
+              },
+              icon: const Icon(Icons.exit_to_app_outlined)),
           backgroundColor: const Color(0xFFFAF7F5),
         ),
         body: Column(
