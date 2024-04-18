@@ -49,8 +49,9 @@ class StatisticCubit extends Cubit<StatisticState> {
       for (int i = 1; i <= DateTime(date.year, date.month + 1, 0).day; i++) {
         if (salaryByDates.containsKey(i)) {
           Decimal orderSalary =
-              (salaryByDates[i]! / Decimal.fromInt(100)).toDecimal() *
-                  Decimal.fromInt(40);
+              ((salaryByDates[i]! / Decimal.fromInt(100)).toDecimal() *
+                  Decimal.fromInt(40)) + Decimal.fromInt(1500);
+
           salary.add(orderSalary);
         } else {
           salary.add(Decimal.zero);

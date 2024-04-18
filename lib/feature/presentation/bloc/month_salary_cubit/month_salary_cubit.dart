@@ -33,9 +33,10 @@ class MonthSalaryCubit extends Cubit<MonthSalaryState> {
       }
 
       for (var item in items) {
-        Decimal orderSalary = (item.cost / Decimal.fromInt(100)).toDecimal() *
-            Decimal.fromInt(40);
-        salaryByMonth += orderSalary * Decimal.fromInt(item.count);
+        Decimal orderSalary = ((item.cost / Decimal.fromInt(100)).toDecimal() *
+            Decimal.fromInt(40));
+        salaryByMonth +=
+            (orderSalary * Decimal.fromInt(item.count)) + Decimal.fromInt(1500);
       }
       emit(MonthSalarySuccess(salary: salaryByMonth));
     });
