@@ -13,11 +13,11 @@ final class OrdersCostLoading extends OrdersCostState {}
 
 final class OrdersCostSuccess extends OrdersCostState {
   final Map<int, Decimal> costs;
-
-  const OrdersCostSuccess({required this.costs});
+  final Map<int, Decimal> costsForRecent;
+  const OrdersCostSuccess({required this.costs, required this.costsForRecent});
 
   @override
-  get props => [costs];
+  get props => [costs, costsForRecent];
 }
 
 final class OrdersCostFailure extends OrdersCostState {

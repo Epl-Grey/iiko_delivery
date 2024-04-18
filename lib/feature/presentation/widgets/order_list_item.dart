@@ -77,7 +77,7 @@ class _OrderListItemState extends State<OrderListItem> {
                           builder: (context, state) {
                             if (state is OrdersCostSuccess) {
                               return Text(
-                                "${state.costs[widget.orderModel.id]!.toStringAsFixed(2)} ₽",
+                                "${state.costsForRecent[widget.orderModel.id]!.toStringAsFixed(2)} ₽",
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,

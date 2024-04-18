@@ -6,6 +6,7 @@ import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.da
 import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_state.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_state.dart';
+import 'package:iiko_delivery/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/set_delivered_cubit/set_delivered_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/set_delivered_cubit/set_delivered_state.dart';
 import 'package:iiko_delivery/feature/presentation/widgets/item_list_widget.dart';
@@ -25,8 +26,10 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   Widget build(BuildContext context) {
     final order = ModalRoute.of(context)!.settings.arguments as OrderEntity;
     int orderId = order.id;
+    bool isDelivered = order.isDelivered;
     context.read<ItemCubit>().getOrderItems(order.id);
     context.read<LocationCubit>().getPhoneLocation(order.address);
+    context.read<OrdersCostCubit>().getOrdersCost(isDelivered);
 
     BitmapDescriptor address = BitmapDescriptor.defaultMarker;
     BitmapDescriptor home = BitmapDescriptor.defaultMarker;
@@ -41,7 +44,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       // Начальная точка
 
       String googleMapsUrl =
-          'https://www.google.com/maps/dir/?api=1&origin=$startLat,$startLong&destination=$destinationLat,$destinationLong&travelmode=driving';
+          'geo:$startLat,$startLong?q=$destinationLat,$destinationLong';
 
       // ignore: deprecated_member_use
       if (await canLaunch(googleMapsUrl)) {
@@ -76,7 +79,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       body: Container(
         color: const Color(0xFFFAF7F5),
         child: Padding(
-          padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 20),
+          padding:
+              const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 20),
           child: Container(
             color: const Color(0xFFFAF7F5),
             constraints: BoxConstraints(
@@ -314,6 +318,44 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                       }
                     },
                   ),
+                ),
+                BlocBuilder<OrdersCostCubit, OrdersCostState>(
+                  builder: (context, state) {
+                    if (state is OrdersCostSuccess) {
+                      return Text(
+                        "Итоговая стоимость ${state.costs[orderId]!.toStringAsFixed(2)} ₽ ",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      );
+                    } else if (state is OrdersCostFailure) {
+                      return Text(state.message);
+                    } else {
+                      return const Text('Loading...');
+                    }
+                  },
+                ),
+                BlocBuilder<OrdersCostCubit, OrdersCostState>(
+                  builder: (context, state) {
+                    if (state is OrdersCostSuccess) {
+                      return Text(
+                        "Процент курьера ${state.costsForRecent[orderId]!.toStringAsFixed(2)} ₽ (40%)",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      );
+                    } else if (state is OrdersCostFailure) {
+                      return Text(state.message);
+                    } else {
+                      return const Text('Loading...');
+                    }
+                  },
                 ),
                 Align(
                   alignment: Alignment.bottomLeft,

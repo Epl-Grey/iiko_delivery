@@ -56,10 +56,19 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
   }
 
   Widget getTitles(double value, TitleMeta meta) {
-    const style = TextStyle(
-      color: Colors.black,
-      fontWeight: FontWeight.bold,
+    const styleNumber = TextStyle(
+      color: Color(0xFF222222),
       fontSize: 20,
+      fontFamily: 'Nunito',
+      fontWeight: FontWeight.bold,
+      height: 0,
+    );
+    const styleDayOfWeek = TextStyle(
+      color: Color(0xFF222222),
+      fontSize: 16,
+      fontFamily: 'Nunito',
+      fontWeight: FontWeight.bold,
+      height: 0,
     );
     List<String> daysOfWeekList = [];
     Widget text;
@@ -91,141 +100,234 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
     }
     switch (value.toInt()) {
       case 0:
-        text = Text(
-            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
         break;
       case 1:
-        text = Text(
-            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
         break;
       case 2:
-        text = Text(
-            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
         break;
       case 3:
-        text = Text(
-            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
         break;
       case 4:
-        text = Text(
-            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
         break;
       case 5:
-        text = Text(
-            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
         break;
       case 6:
-        text = Text(
-            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
         break;
       case 7:
-        text = Text(
-            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
         break;
       case 8:
-        text = Text(
-            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
         break;
       case 9:
-        text = Text(
-            '  ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
         break;
       case 10:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 11:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 12:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 13:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 14:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 15:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 16:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 17:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 18:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 19:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 20:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 21:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 22:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 23:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 24:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 25:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 26:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 27:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 28:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 29:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       case 30:
-        text = Text(' ${value.toInt() + 1} \n ${daysOfWeekList[value.toInt()]}',
-            style: style);
-        break;
+        text = Column(
+          children: <Widget>[
+            Text('${value.toInt() + 1}', style: styleNumber),
+            Text(daysOfWeekList[value.toInt()], style: styleDayOfWeek),
+          ],
+        );
       default:
-        text = const Text('', style: style);
+        text = const Text('', style: styleNumber);
         break;
     }
 
@@ -242,86 +344,109 @@ class _BarGraphWidgetState extends State<BarGraphWidget> {
       alignment: Alignment.topLeft,
       child: Column(
         children: <Widget>[
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: SizedBox(
-              width: 36 * widget.length * 1.56, // Ширина графика
-              height: 400, // Высота графика
-              child: BarChart(
-                BarChartData(
-                  barTouchData: BarTouchData(
-                    enabled: true,
-                    touchTooltipData: BarTouchTooltipData(
-                      getTooltipItem: (group, groupIndex, rod, rodIndex) {
-
-                        return BarTooltipItem(
-                            '${widget.salary[groupIndex].toString()}₽',
-                            const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20));
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SizedBox(
+                width: 36 * widget.length * 1.459, // Ширина графика
+                height: 350, // Высота графика
+                child: BarChart(
+                  BarChartData(
+                    barTouchData: BarTouchData(
+                      enabled: true,
+                      touchTooltipData: BarTouchTooltipData(
+                        getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                          return BarTooltipItem(
+                              '${widget.salary[groupIndex].toString()}₽',
+                              const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20));
+                        },
+                        getTooltipColor: (group) => Colors.white,
+                      ),
+                      touchCallback: (event, response) {
+                        if (response != null &&
+                            response.spot != null &&
+                            event is FlTapUpEvent) {
+                          setState(() {
+                            final x = response.spot!.touchedBarGroup.x;
+                            final isShowing = showingTooltip == x;
+                            if (isShowing) {
+                              showingTooltip = -1;
+                            } else {
+                              showingTooltip = x;
+                              context
+                                  .read<DailyOrderCubit>()
+                                  .getUserOrdersByDay(
+                                      true,
+                                      DateTime(
+                                          widget.selectedDate.year,
+                                          widget.selectedDate.month,
+                                          response.spot!.touchedBarGroupIndex +
+                                              1,
+                                          widget.selectedDate.hour,
+                                          widget.selectedDate.minute,
+                                          widget.selectedDate.second,
+                                          widget.selectedDate.millisecond,
+                                          widget.selectedDate.microsecond));
+                            }
+                          });
+                        }
                       },
-                      getTooltipColor: (group) => Colors.white,
                     ),
-                    touchCallback: (event, response) {
-                      if (response != null &&
-                          response.spot != null &&
-                          event is FlTapUpEvent) {
-                        setState(() {
-                          final x = response.spot!.touchedBarGroup.x;
-                          final isShowing = showingTooltip == x;
-                          if (isShowing) {
-                            showingTooltip = -1;
-                          } else {
-                            showingTooltip = x;
-                          context.read<DailyOrderCubit>().getUserOrdersByDay(
-                            true,
-                            DateTime(
-                                widget.selectedDate.year,
-                                widget.selectedDate.month,
-                                response.spot!.touchedBarGroupIndex + 1,
-                                widget.selectedDate.hour,
-                                widget.selectedDate.minute,
-                                widget.selectedDate.second,
-                                widget.selectedDate.millisecond,
-                                widget.selectedDate.microsecond));
-                          }
-                        });
-                      }
-                    },
-                  ),
-                  alignment: BarChartAlignment.spaceAround,
-                  maxY: 5000,
-                  titlesData: FlTitlesData(
-                      show: true,
-                      leftTitles: const AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: false,
-                        ),
-                      ),
-                      rightTitles: const AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: false,
-                        ),
-                      ),
-                      bottomTitles: const AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: false,
-                        ),
-                      ),
-                      topTitles: AxisTitles(
+                    alignment: BarChartAlignment.spaceAround,
+                    maxY: 5000,
+                    titlesData: FlTitlesData(
+                        show: true,
+                        leftTitles: const AxisTitles(
                           sideTitles: SideTitles(
-                        showTitles: true,
-                        getTitlesWidget: getTitles,
-                        reservedSize: 68,
-                      ))),
-                  borderData: FlBorderData(
-                    show: false,
+                            showTitles: false,
+                          ),
+                        ),
+                        rightTitles: const AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                          ),
+                        ),
+                        bottomTitles: const AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                          ),
+                        ),
+                        topTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                          showTitles: true,
+                          getTitlesWidget: getTitles,
+                          reservedSize: 68,
+                        ))),
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
+                    gridData: const FlGridData(show: false),
+                    barGroups: createBarChartData(widget.length, widget.salary),
                   ),
-                  gridData: const FlGridData(show: false),
-                  barGroups: createBarChartData(widget.length, widget.salary),
                 ),
               ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 10.0, left: 10.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  'Заказы',
+                  style: TextStyle(
+                    color: Color(0xFF222222),
+                    fontSize: 28,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w600,
+                    height: 0,
+                  ),
+                ),
+              ],
             ),
           ),
           Expanded(

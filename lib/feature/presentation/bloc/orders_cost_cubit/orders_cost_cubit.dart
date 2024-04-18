@@ -29,7 +29,7 @@ class OrdersCostCubit extends Cubit<OrdersCostState> {
         (fail) => emit(OrdersCostFailure(message: fail.toString())),
         (orders) async {
           Map<int, Decimal> costs = {};
-
+          Map<int, Decimal> costsForRecent = {};
           for (final order in orders){
             final itemsResponse = await getOrderItems(ItemParams(orderId: int.parse(order.orderNumber)));
 
@@ -37,6 +37,13 @@ class OrdersCostCubit extends Cubit<OrdersCostState> {
               (failure) => emit(OrdersCostFailure(message: failure.toString())),
               (itemsFromResponse) {
                 costs.putIfAbsent(order.id, () {
+                  Decimal orderCost = Decimal.zero;
+                  for(final item in itemsFromResponse){
+                    orderCost += item.cost * Decimal.fromInt(item.count);
+                  }
+                  return orderCost;
+                });
+                costsForRecent.putIfAbsent(order.id, () {
                   Decimal orderCost = Decimal.zero;
                   for(final item in itemsFromResponse){
                     orderCost += item.cost * Decimal.fromInt(item.count);
@@ -50,7 +57,7 @@ class OrdersCostCubit extends Cubit<OrdersCostState> {
 
           if(state is OrdersCostFailure) return;
 
-          emit(OrdersCostSuccess(costs: costs));
+          emit(OrdersCostSuccess(costs: costs, costsForRecent: costsForRecent));
         });
   }
 }
