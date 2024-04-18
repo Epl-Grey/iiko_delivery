@@ -50,7 +50,7 @@ Future<void> init() async {
       getUserOrders: sl(), getUserOrdersByDay: sl(), getOrderItems: sl()));
   sl.registerFactory<StatisticCubit>(
       () => StatisticCubit(getUserOrdersByMonth: sl(), getOrderItems: sl()));
-  sl.registerFactory<MonthOrderCubit>(() => MonthOrderCubit(sl(), sl()));
+  sl.registerFactory<MonthSalaryCubit>(() => MonthSalaryCubit(sl(), sl()));
   sl.registerFactory<DailyOrderCubit>(() => DailyOrderCubit(sl()));
   sl.registerFactory<SetDeliveredCubit>(
       () => SetDeliveredCubit(setOrderIsDeliveredUseCase: sl()));

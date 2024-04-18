@@ -41,7 +41,8 @@ class OrdersCostCubit extends Cubit<OrdersCostState> {
                   for(final item in itemsFromResponse){
                     orderCost += item.cost * Decimal.fromInt(item.count);
                   }
-                  return orderCost;
+                  Decimal orderSalary = (orderCost / Decimal.fromInt(100)).toDecimal() * Decimal.fromInt(40);
+                  return orderSalary;
                 });
               }
             );

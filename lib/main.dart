@@ -70,8 +70,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<StatisticCubit>(
           create: (context) => sl<StatisticCubit>(),
         ),
-        BlocProvider<MonthOrderCubit>(
-          create: (context) => sl<MonthOrderCubit>(),
+        BlocProvider<MonthSalaryCubit>(
+          create: (context) => sl<MonthSalaryCubit>(),
         ),
         BlocProvider<DailyOrderCubit>(
           create: (context) => sl<DailyOrderCubit>(),

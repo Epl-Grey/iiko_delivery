@@ -5,10 +5,10 @@ import 'package:iiko_delivery/feature/domain/usecases/get_order_items.dart';
 import 'package:iiko_delivery/feature/domain/usecases/get_user_orders_by_month.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/month_salary_cubit/month_salary_state.dart';
 
-class MonthOrderCubit extends Cubit<MonthSalaryState> {
+class MonthSalaryCubit extends Cubit<MonthSalaryState> {
   final GetUserOrdersByMonth getUserOrdersByMonthUseCase;
   final GetOrderItems getOrderItems;
-  MonthOrderCubit(
+  MonthSalaryCubit(
     this.getUserOrdersByMonthUseCase,
     this.getOrderItems,
   ) : super(MonthSalaryInitial());
@@ -33,7 +33,9 @@ class MonthOrderCubit extends Cubit<MonthSalaryState> {
       }
 
       for (var item in items) {
-        salaryByMonth += item.cost * Decimal.fromInt(item.count);
+        Decimal orderSalary = (item.cost / Decimal.fromInt(100)).toDecimal() *
+            Decimal.fromInt(40);
+        salaryByMonth += orderSalary * Decimal.fromInt(item.count);
       }
       emit(MonthSalarySuccess(salary: salaryByMonth));
     });

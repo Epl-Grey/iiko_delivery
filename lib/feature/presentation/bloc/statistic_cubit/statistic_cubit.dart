@@ -45,11 +45,13 @@ class StatisticCubit extends Cubit<StatisticState> {
           });
         }
         salaryByDates[key] = someSalary;
-
       }
-      for(int i = 1; i <= DateTime(date.year, date.month + 1, 0).day; i++) {
-        if(salaryByDates.containsKey(i)) {
-          salary.add(salaryByDates[i]!);
+      for (int i = 1; i <= DateTime(date.year, date.month + 1, 0).day; i++) {
+        if (salaryByDates.containsKey(i)) {
+          Decimal orderSalary =
+              (salaryByDates[i]! / Decimal.fromInt(100)).toDecimal() *
+                  Decimal.fromInt(40);
+          salary.add(orderSalary);
         } else {
           salary.add(Decimal.zero);
         }

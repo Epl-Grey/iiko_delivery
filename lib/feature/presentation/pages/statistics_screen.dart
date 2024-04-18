@@ -33,7 +33,7 @@ class _StatisticaPageState extends State<StatisticaPage> {
   @override
   Widget build(BuildContext context) {
     context.read<StatisticCubit>().getMonthSalary(_selectedDate);
-    context.read<MonthOrderCubit>().getUserOrdersByMonth(_selectedDate);
+    context.read<MonthSalaryCubit>().getUserOrdersByMonth(_selectedDate);
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -74,7 +74,7 @@ class _StatisticaPageState extends State<StatisticaPage> {
                     dimension: 10,
                   ),
                   Expanded(
-                    child: BlocBuilder<MonthOrderCubit, MonthSalaryState>(
+                    child: BlocBuilder<MonthSalaryCubit, MonthSalaryState>(
                       builder: (context, state) {
                         if (state is MonthSalarySuccess) {
                           return Text('${state.salary}₽',

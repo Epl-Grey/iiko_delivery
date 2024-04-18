@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
@@ -77,7 +76,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       body: Container(
         color: const Color(0xFFFAF7F5),
         child: Padding(
-          padding: EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 20),
+          padding: const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 20),
           child: Container(
             color: const Color(0xFFFAF7F5),
             constraints: BoxConstraints(
@@ -158,7 +157,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   padding: const EdgeInsets.only(top: 10),
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Color(0xFFEFEBE8),
+                        color: const Color(0xFFEFEBE8),
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: const [
                           BoxShadow(
