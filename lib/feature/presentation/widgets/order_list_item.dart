@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
+import 'package:beFit_Del/feature/domain/entities/order_entity.dart';
+import 'package:beFit_Del/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
 import 'package:intl/intl.dart';
 
 class OrderListItem extends StatefulWidget {

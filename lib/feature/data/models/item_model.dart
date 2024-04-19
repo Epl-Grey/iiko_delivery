@@ -1,5 +1,5 @@
 import 'package:decimal/decimal.dart';
-import 'package:iiko_delivery/feature/domain/entities/item_entity.dart';
+import 'package:beFit_Del/feature/domain/entities/item_entity.dart';
 
 class ItemModel extends ItemEntity {
   const ItemModel({

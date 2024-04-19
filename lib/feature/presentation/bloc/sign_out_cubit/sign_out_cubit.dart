@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iiko_delivery/core/error/failure.dart';
-import 'package:iiko_delivery/feature/domain/usecases/sign_out_user.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/sign_out_cubit/sign_out_state.dart';
+import 'package:beFit_Del/core/error/failure.dart';
+import 'package:beFit_Del/feature/domain/usecases/sign_out_user.dart';
+import 'package:beFit_Del/feature/presentation/bloc/sign_out_cubit/sign_out_state.dart';
 
 class SignOutUserCubit extends Cubit<SignOutUserState> {
   final SignOutUser signOutUser;

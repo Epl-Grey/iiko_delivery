@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iiko_delivery/feature/domain/usecases/sign_in_user.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_state.dart';
-import 'package:iiko_delivery/locator_service.dart';
+import 'package:beFit_Del/feature/domain/usecases/sign_in_user.dart';
+import 'package:beFit_Del/feature/presentation/bloc/sign_in_cubit/sign_in_cubit.dart';
+import 'package:beFit_Del/feature/presentation/bloc/sign_in_cubit/sign_in_state.dart';
+import 'package:beFit_Del/locator_service.dart';
 
 class SignInUserPage extends StatefulWidget {
   const SignInUserPage({super.key});

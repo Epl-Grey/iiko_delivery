@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iiko_delivery/feature/domain/usecases/get_user_orders.dart';
-import 'package:iiko_delivery/feature/domain/usecases/get_user_orders_by_day.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_state.dart';
+import 'package:beFit_Del/feature/domain/usecases/get_user_orders.dart';
+import 'package:beFit_Del/feature/domain/usecases/get_user_orders_by_day.dart';
+import 'package:beFit_Del/feature/presentation/bloc/order_cubit/order_state.dart';
 
 class OrderCubit extends Cubit<OrderState> {
   final GetUserOrders getUserOrdersUseCase;

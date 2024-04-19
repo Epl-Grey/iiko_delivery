@@ -1,9 +1,9 @@
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iiko_delivery/feature/domain/usecases/get_order_items.dart';
-import 'package:iiko_delivery/feature/domain/usecases/get_user_orders.dart';
-import 'package:iiko_delivery/feature/domain/usecases/get_user_orders_by_day.dart';
+import 'package:beFit_Del/feature/domain/usecases/get_order_items.dart';
+import 'package:beFit_Del/feature/domain/usecases/get_user_orders.dart';
+import 'package:beFit_Del/feature/domain/usecases/get_user_orders_by_day.dart';
 
 part 'orders_cost_state.dart';
 

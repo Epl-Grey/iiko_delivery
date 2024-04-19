@@ -1,6 +1,6 @@
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:iiko_delivery/feature/domain/entities/location_entity.dart';
+import 'package:beFit_Del/feature/domain/entities/location_entity.dart';
 
 class LocationModel extends LocationEntity {
   const LocationModel({

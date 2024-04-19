@@ -1,10 +1,10 @@
 import 'dart:core';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:iiko_delivery/core/error/failure.dart';
-import 'package:iiko_delivery/core/usecases/usecase.dart';
-import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
-import 'package:iiko_delivery/feature/domain/repositories/order_repository.dart';
+import 'package:beFit_Del/core/error/failure.dart';
+import 'package:beFit_Del/core/usecases/usecase.dart';
+import 'package:beFit_Del/feature/domain/entities/order_entity.dart';
+import 'package:beFit_Del/feature/domain/repositories/order_repository.dart';
 
 class GetUserOrdersByDay extends UseCase<List<OrderEntity>, OrdersByDayParams> {
   final OrderRepository orderRepository;

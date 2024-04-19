@@ -1,6 +1,6 @@
 
 import 'package:equatable/equatable.dart';
-import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
+import 'package:beFit_Del/feature/domain/entities/order_entity.dart';
 
 abstract class DailyOrderState extends Equatable {
   const DailyOrderState();

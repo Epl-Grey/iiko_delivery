@@ -1,4 +1,4 @@
-import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
+import 'package:beFit_Del/feature/domain/entities/order_entity.dart';
 
 class OrderModel extends OrderEntity {
   const OrderModel({

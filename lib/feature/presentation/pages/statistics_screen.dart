@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/month_salary_cubit/month_salary_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/month_salary_cubit/month_salary_state.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/statistic_cubit/statistic_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/statistic_cubit/statistic_state.dart';
-import 'package:iiko_delivery/feature/presentation/widgets/bar_graph_widget.dart';
+import 'package:beFit_Del/feature/presentation/bloc/month_salary_cubit/month_salary_cubit.dart';
+import 'package:beFit_Del/feature/presentation/bloc/month_salary_cubit/month_salary_state.dart';
+import 'package:beFit_Del/feature/presentation/bloc/statistic_cubit/statistic_cubit.dart';
+import 'package:beFit_Del/feature/presentation/bloc/statistic_cubit/statistic_state.dart';
+import 'package:beFit_Del/feature/presentation/widgets/bar_graph_widget.dart';
 
 class StatisticaPage extends StatefulWidget {
   const StatisticaPage({super.key});

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:iiko_delivery/core/error/failure.dart';
-import 'package:iiko_delivery/feature/data/datasources/user_remote_data_source.dart';
-import 'package:iiko_delivery/feature/domain/repositories/user_repository.dart';
+import 'package:beFit_Del/core/error/failure.dart';
+import 'package:beFit_Del/feature/data/datasources/user_remote_data_source.dart';
+import 'package:beFit_Del/feature/domain/repositories/user_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UserRepositoryImpl extends UserRepository {

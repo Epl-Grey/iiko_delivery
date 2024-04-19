@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iiko_delivery/feature/domain/usecases/get_user_orders_by_day.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/dayily_order_cubit/daily_order_state.dart';
+import 'package:beFit_Del/feature/domain/usecases/get_user_orders_by_day.dart';
+import 'package:beFit_Del/feature/presentation/bloc/dayily_order_cubit/daily_order_state.dart';
 
 class DailyOrderCubit extends Cubit<DailyOrderState> {
   final GetUserOrdersByDay getUserOrdersByDayUseCase;

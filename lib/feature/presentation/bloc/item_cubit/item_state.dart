@@ -1,6 +1,6 @@
 
 import 'package:equatable/equatable.dart';
-import 'package:iiko_delivery/feature/domain/entities/item_entity.dart';
+import 'package:beFit_Del/feature/domain/entities/item_entity.dart';
 
 abstract class ItemState extends Equatable {
   const ItemState();
