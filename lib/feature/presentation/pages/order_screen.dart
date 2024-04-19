@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/daily_salary_cubit/daily_salary_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/sign_out_cubit/sign_out_cubit.dart';
 import 'package:intl/intl.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
 import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_state.dart';
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
             schema: 'public',
             table: 'Orders',
             callback: (payload) {
-              context.read<SignOutUserCubit>().signOutUser();
+              context.read<OrderCubit>().getUserOrders(isDelivered, today);
               print('callback');
             })
         .subscribe();
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
         ),
         leading: IconButton(
             onPressed: () {
-              context.read<OrdersCostCubit>().getOrdersCost(isDelivered);
+              SystemNavigator.pop();
             },
             icon: const Icon(Icons.exit_to_app_outlined)),
         backgroundColor: const Color(0xFFFAF7F5),

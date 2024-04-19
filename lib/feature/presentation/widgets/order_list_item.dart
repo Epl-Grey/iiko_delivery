@@ -18,7 +18,6 @@ class OrderListItem extends StatefulWidget {
 
 class _OrderListItemState extends State<OrderListItem> {
   var expand = false;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -121,6 +120,20 @@ class _OrderListItemState extends State<OrderListItem> {
                   const SizedBox.square(
                     dimension: 5,
                   ),
+                  Align(
+                      alignment: Alignment.topLeft,
+                      child: widget.orderModel.neadToCall
+                          ? const Text(
+                              'Звонить за 15 минут',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w500,
+                                height: 0,
+                              ),
+                            )
+                          : null),
                   Align(
                     alignment: Alignment.bottomRight,
                     child: Text(

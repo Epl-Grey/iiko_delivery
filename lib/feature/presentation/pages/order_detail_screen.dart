@@ -357,35 +357,56 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                     }
                   },
                 ),
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: SwipeableButtonView(
-                      buttonText: "Доставлен",
-                      buttontextstyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w600,
-                        height: 0.07,
-                        letterSpacing: 0.09,
-                      ),
-                      buttonWidget: Container(
-                        child: const Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          color: Colors.grey,
+                isDelivered
+                    ? ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(60),
+                          foregroundColor: Colors.black,
+                          backgroundColor: Colors.black,
+                          surfaceTintColor: Colors.black,
                         ),
+                        onPressed: () {},
+                        child: const Text(
+                          'Заказ доставлен',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w600,
+                            height: 0.07,
+                            letterSpacing: 0.09,
+                          ),
+                        ),
+                      )
+                    : Align(
+                        alignment: Alignment.bottomLeft,
+                        child: SwipeableButtonView(
+                            buttonText: "Доставлен",
+                            buttontextstyle: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w600,
+                              height: 0.07,
+                              letterSpacing: 0.09,
+                            ),
+                            buttonWidget: Container(
+                              child: const Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            activeColor: const Color(0xFF78C4A4),
+                            isFinished: isFinished,
+                            onWaitingProcess: () {
+                              Future.delayed(Duration(seconds: 2), () {
+                                context
+                                    .read<SetDeliveredCubit>()
+                                    .setOrderIsDelivered(orderId, true);
+                              });
+                            },
+                            onFinish: () async {}),
                       ),
-                      activeColor: const Color(0xFF78C4A4),
-                      isFinished: isFinished,
-                      onWaitingProcess: () {
-                        Future.delayed(Duration(seconds: 2), () {
-                          context
-                              .read<SetDeliveredCubit>()
-                              .setOrderIsDelivered(orderId, true);
-                        });
-                      },
-                      onFinish: () async {}),
-                ),
                 BlocListener<SetDeliveredCubit, SetDeliveredState>(
                   listener: (context, state) {
                     if (state is SetDeliveredLoaded) {
