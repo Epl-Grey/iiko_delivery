@@ -9,16 +9,19 @@ class OrderEntity extends Equatable {
   final String clientName;
   final DateTime orderDate;
   final bool neadToCall;
+  final String paymentMethod;
 
-  const OrderEntity(
-      {required this.id,
-      required this.orderNumber,
-      required this.address,
-      required this.isDelivered,
-      required this.clientPhone,
-      required this.clientName,
-      required this.orderDate,
-      required this.neadToCall});
+  const OrderEntity({
+    required this.id,
+    required this.orderNumber,
+    required this.address,
+    required this.isDelivered,
+    required this.clientPhone,
+    required this.clientName,
+    required this.orderDate,
+    required this.neadToCall,
+    required this.paymentMethod,
+  });
 
   @override
   get props => [
@@ -29,6 +32,7 @@ class OrderEntity extends Equatable {
         clientPhone,
         clientName,
         orderDate,
-        neadToCall
+        neadToCall,
+        paymentMethod,
       ];
 }
