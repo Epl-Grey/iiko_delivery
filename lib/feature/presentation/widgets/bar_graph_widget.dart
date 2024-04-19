@@ -3,9 +3,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:iiko_delivery/feature/presentation/bloc/dayily_order_cubit/daily_order_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/dayily_order_cubit/daily_order_state.dart';
-import 'package:iiko_delivery/feature/presentation/widgets/order_list_item.dart';
+import 'package:beFit_Del/feature/presentation/bloc/dayily_order_cubit/daily_order_cubit.dart';
+import 'package:beFit_Del/feature/presentation/bloc/dayily_order_cubit/daily_order_state.dart';
+import 'package:beFit_Del/feature/presentation/widgets/order_list_item.dart';
 import 'package:intl/intl.dart';
 
 class BarGraphWidget extends StatefulWidget {

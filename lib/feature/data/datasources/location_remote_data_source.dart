@@ -1,6 +1,6 @@
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:iiko_delivery/feature/data/models/location_model.dart';
+import 'package:beFit_Del/feature/data/models/location_model.dart';
 
 abstract class LocationRemoteDataSource {
   Future<LocationModel> getPhoneLocation(String address);

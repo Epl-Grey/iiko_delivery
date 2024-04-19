@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/daily_salary_cubit/daily_salary_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/dayily_order_cubit/daily_order_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/item_cubit/item_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/location_cubit/location_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/month_salary_cubit/month_salary_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/set_delivered_cubit/set_delivered_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/sign_out_cubit/sign_out_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/statistic_cubit/statistic_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/order_cubit/order_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/pages/order_detail_screen.dart';
-import 'package:iiko_delivery/feature/presentation/pages/order_screen.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/sign_in_cubit/sign_in_cubit.dart';
-import 'package:iiko_delivery/feature/presentation/pages/sign_in_user.dart';
-import 'package:iiko_delivery/feature/presentation/pages/splash_screen_page.dart';
-import 'package:iiko_delivery/feature/presentation/pages/statistics_screen.dart';
+import 'package:beFit_Del/feature/presentation/bloc/daily_salary_cubit/daily_salary_cubit.dart';
+import 'package:beFit_Del/feature/presentation/bloc/dayily_order_cubit/daily_order_cubit.dart';
+import 'package:beFit_Del/feature/presentation/bloc/item_cubit/item_cubit.dart';
+import 'package:beFit_Del/feature/presentation/bloc/location_cubit/location_cubit.dart';
+import 'package:beFit_Del/feature/presentation/bloc/month_salary_cubit/month_salary_cubit.dart';
+import 'package:beFit_Del/feature/presentation/bloc/set_delivered_cubit/set_delivered_cubit.dart';
+import 'package:beFit_Del/feature/presentation/bloc/sign_out_cubit/sign_out_cubit.dart';
+import 'package:beFit_Del/feature/presentation/bloc/statistic_cubit/statistic_cubit.dart';
+import 'package:beFit_Del/feature/presentation/bloc/order_cubit/order_cubit.dart';
+import 'package:beFit_Del/feature/presentation/bloc/orders_cost_cubit/orders_cost_cubit.dart';
+import 'package:beFit_Del/feature/presentation/pages/order_detail_screen.dart';
+import 'package:beFit_Del/feature/presentation/pages/order_screen.dart';
+import 'package:beFit_Del/feature/presentation/bloc/sign_in_cubit/sign_in_cubit.dart';
+import 'package:beFit_Del/feature/presentation/pages/sign_in_user.dart';
+import 'package:beFit_Del/feature/presentation/pages/splash_screen_page.dart';
+import 'package:beFit_Del/feature/presentation/pages/statistics_screen.dart';
 
-import 'package:iiko_delivery/locator_service.dart';
+import 'package:beFit_Del/locator_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {

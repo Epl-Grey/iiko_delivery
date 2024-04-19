@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iiko_delivery/core/error/failure.dart';
-import 'package:iiko_delivery/feature/domain/usecases/set_order_is_delivered.dart';
+import 'package:beFit_Del/core/error/failure.dart';
+import 'package:beFit_Del/feature/domain/usecases/set_order_is_delivered.dart';
 
-import 'package:iiko_delivery/feature/presentation/bloc/set_delivered_cubit/set_delivered_state.dart';
+import 'package:beFit_Del/feature/presentation/bloc/set_delivered_cubit/set_delivered_state.dart';
 
 
 class SetDeliveredCubit extends Cubit<SetDeliveredState> {

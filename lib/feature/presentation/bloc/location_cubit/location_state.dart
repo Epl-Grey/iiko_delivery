@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:iiko_delivery/feature/domain/entities/location_entity.dart';
+import 'package:beFit_Del/feature/domain/entities/location_entity.dart';
 
 abstract class LocationState extends Equatable {
   const LocationState();

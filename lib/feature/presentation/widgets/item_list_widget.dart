@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:iiko_delivery/feature/domain/entities/item_entity.dart';
+import 'package:beFit_Del/feature/domain/entities/item_entity.dart';
 
 class OrderItemsList extends StatefulWidget {
   final ItemEntity itemModel;

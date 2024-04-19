@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iiko_delivery/main.dart';
+import 'package:beFit_Del/main.dart';
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 

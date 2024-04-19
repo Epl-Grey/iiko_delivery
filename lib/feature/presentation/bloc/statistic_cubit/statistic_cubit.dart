@@ -1,9 +1,9 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
-import 'package:iiko_delivery/feature/domain/usecases/get_order_items.dart';
-import 'package:iiko_delivery/feature/domain/usecases/get_user_orders_by_month.dart';
-import 'package:iiko_delivery/feature/presentation/bloc/statistic_cubit/statistic_state.dart';
+import 'package:beFit_Del/feature/domain/entities/order_entity.dart';
+import 'package:beFit_Del/feature/domain/usecases/get_order_items.dart';
+import 'package:beFit_Del/feature/domain/usecases/get_user_orders_by_month.dart';
+import 'package:beFit_Del/feature/presentation/bloc/statistic_cubit/statistic_state.dart';
 
 class StatisticCubit extends Cubit<StatisticState> {
   final GetUserOrdersByMonth getUserOrdersByMonth;

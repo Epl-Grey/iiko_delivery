@@ -1,4 +1,4 @@
-import 'package:iiko_delivery/feature/data/models/item_model.dart';
+import 'package:beFit_Del/feature/data/models/item_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class ItemRemoteDataSource {

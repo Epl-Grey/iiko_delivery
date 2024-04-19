@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:iiko_delivery/core/error/failure.dart';
-import 'package:iiko_delivery/core/usecases/usecase.dart';
-import 'package:iiko_delivery/feature/data/models/location_model.dart';
-import 'package:iiko_delivery/feature/domain/entities/location_entity.dart';
+import 'package:beFit_Del/core/error/failure.dart';
+import 'package:beFit_Del/core/usecases/usecase.dart';
+import 'package:beFit_Del/feature/data/models/location_model.dart';
+import 'package:beFit_Del/feature/domain/entities/location_entity.dart';
 
-import 'package:iiko_delivery/feature/domain/repositories/location_repositiry.dart';
+import 'package:beFit_Del/feature/domain/repositories/location_repositiry.dart';
 
 class GetPhoneLocation extends UseCase<LocationEntity, LocationParams>{
   final LocationRepository locationRepository;

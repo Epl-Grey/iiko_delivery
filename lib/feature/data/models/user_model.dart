@@ -1,4 +1,4 @@
-import 'package:iiko_delivery/feature/domain/entities/user_entitiy.dart';
+import 'package:beFit_Del/feature/domain/entities/user_entitiy.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // class UserModel extends UserEntity {
