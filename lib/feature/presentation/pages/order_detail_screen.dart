@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iiko_delivery/feature/domain/entities/order_entity.dart';
@@ -59,7 +61,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       appBar: AppBar(
         centerTitle: true,
         shadowColor: Colors.white,
-
         surfaceTintColor: Colors.white,
         title: Text(
           "Номер заказа | $orderId",
@@ -87,9 +88,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 20),
             child: Container(
               color: const Color(0xFFFAF7F5),
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height,
-              ),
               child: Column(
                 children: <Widget>[
                   Container(
@@ -364,44 +362,134 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: BlocBuilder<ItemCubit, ItemState>(
-                      builder: (context, state) {
-                        if (state is GetOrderItemsSuccessState) {
-                          return ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: state.items.length,
-                              itemBuilder: (ctx, index) => OrderItemsList(
-                                  itemModel: state.items[index]));
-                        } else if (state is GetOrderItemsFailState) {
-                          return Center(
-                            child: Text(state.message),
-                          );
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator.adaptive(),
-                          );
-                        }
-                      },
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      BlocBuilder<ItemCubit, ItemState>(
+                        builder: (context, state) {
+                          if (state is GetOrderItemsSuccessState) {
+                            return ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: state.items.length,
+                                itemBuilder: (ctx, index) => OrderItemsList(
+                                    itemModel: state.items[index]));
+                          } else if (state is GetOrderItemsFailState) {
+                            return Center(
+                              child: Text(state.message),
+                            );
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator.adaptive(),
+                            );
+                          }
+                        },
+                      ),
+                      BlocListener<SetDeliveredCubit, SetDeliveredState>(
+                        listener: (context, state) {
+                          if (state is SetDeliveredLoaded) {
+                            print('orderId $orderId, \n isdelivered true');
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, "/orders");
+                          } else if (state is SetDeliveredError) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Ошибка!'),
+                                backgroundColor: Colors.redAccent,
+                              ),
+                            );
+                          }
+                        },
+                        child: const SizedBox(),
+                      ),
+                    ],
+                  ),
+                  const Divider(color: Color(0xFFAFA8A1)),
+                  Container(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        const Expanded(
+                          child: Text(
+                            'Итого:',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 17,
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child:
+                                BlocBuilder<OrdersCostCubit, OrdersCostState>(
+                              builder: (context, state) {
+                                if (state is OrdersCostSuccess) {
+                                  return Text(
+                                    " ${state.costs[orderId]!.toStringAsFixed(2)} ₽",
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 17,
+                                      fontFamily: 'Nunito',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  );
+                                } else if (state is OrdersCostFailure) {
+                                  return Text(state.message);
+                                } else {
+                                  return const Text('Loading...');
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  BlocListener<SetDeliveredCubit, SetDeliveredState>(
-                    listener: (context, state) {
-                      if (state is SetDeliveredLoaded) {
-                        print('orderId $orderId, \n isdelivered true');
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, "/orders");
-                      } else if (state is SetDeliveredError) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Ошибка!'),
-                            backgroundColor: Colors.redAccent,
+                  Container(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        const Expanded(
+                          child: Text(
+                            'Выручка(40%):',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 17,
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
-                        );
-                      }
-                    },
-                    child: const SizedBox(),
+                        ),
+                        Container(
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child:
+                                BlocBuilder<OrdersCostCubit, OrdersCostState>(
+                              builder: (context, state) {
+                                if (state is OrdersCostSuccess) {
+                                  return Text(
+                                    " ${state.costsForRecent[orderId]!.toStringAsFixed(2)} ₽",
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 17,
+                                      fontFamily: 'Nunito',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  );
+                                } else if (state is OrdersCostFailure) {
+                                  return Text(state.message);
+                                } else {
+                                  return const Text('Loading...');
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -409,77 +497,27 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(20),
-        child: Container(
-            height: 125,
-            child: Column(
-              children: <Widget>[
-                const Divider(color: Color(0xFFAFA8A1)),
-                BlocBuilder<OrdersCostCubit, OrdersCostState>(
-                  builder: (context, state) {
-                    if (state is OrdersCostSuccess) {
-                      return Text(
-                        "Итоговая стоимость ${state.costs[orderId]!.toStringAsFixed(2)} ₽ ",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      );
-                    } else if (state is OrdersCostFailure) {
-                      return Text(state.message);
-                    } else {
-                      return const Text('Loading...');
-                    }
-                  },
-                ),
-                BlocBuilder<OrdersCostCubit, OrdersCostState>(
-                  builder: (context, state) {
-                    if (state is OrdersCostSuccess) {
-                      return Text(
-                        "Процент курьера ${state.costsForRecent[orderId]!.toStringAsFixed(2)} ₽ (40%)",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      );
-                    } else if (state is OrdersCostFailure) {
-                      return Text(state.message);
-                    } else {
-                      return const Text('Loading...');
-                    }
-                  },
-                ),
-                isDelivered
-                    ? ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(60),
-                          foregroundColor: Colors.black,
-                          backgroundColor: Colors.black,
-                          surfaceTintColor: Colors.black,
-                        ),
-                        onPressed: () {},
-                        child: const Text(
-                          'Заказ доставлен',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w600,
-                            height: 0.07,
-                            letterSpacing: 0.09,
+      bottomNavigationBar: Container(
+        color: Color(0xFFFAF7F5),
+        child: Padding(
+          padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          child: Container(
+              color: Color(0xFFFAF7F5),
+              height: 60,
+              child: Column(
+                children: <Widget>[
+                  isDelivered
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(60),
+                            foregroundColor: Colors.black,
+                            backgroundColor: Colors.black,
+                            surfaceTintColor: Colors.black,
                           ),
-                        ),
-                      )
-                    : Align(
-                        alignment: Alignment.bottomLeft,
-                        child: SwipeableButtonView(
-                            buttonText: "Доставлен",
-                            buttontextstyle: const TextStyle(
+                          onPressed: () {},
+                          child: const Text(
+                            'Заказ доставлен',
+                            style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
                               fontFamily: 'Nunito',
@@ -487,25 +525,40 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                               height: 0.07,
                               letterSpacing: 0.09,
                             ),
-                            buttonWidget: Container(
-                              child: const Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                color: Colors.grey,
+                          ),
+                        )
+                      : Align(
+                          alignment: Alignment.bottomLeft,
+                          child: SwipeableButtonView(
+                              buttonText: "Доставлен",
+                              buttontextstyle: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w600,
+                                height: 0.07,
+                                letterSpacing: 0.09,
                               ),
-                            ),
-                            activeColor: const Color(0xFF78C4A4),
-                            isFinished: isFinished,
-                            onWaitingProcess: () {
-                              Future.delayed(Duration(seconds: 2), () {
-                                context
-                                    .read<SetDeliveredCubit>()
-                                    .setOrderIsDelivered(orderId, true);
-                              });
-                            },
-                            onFinish: () async {}),
-                      ),
-              ],
-            )),
+                              buttonWidget: Container(
+                                child: const Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              activeColor: const Color(0xFF78C4A4),
+                              isFinished: isFinished,
+                              onWaitingProcess: () {
+                                Future.delayed(Duration(seconds: 2), () {
+                                  context
+                                      .read<SetDeliveredCubit>()
+                                      .setOrderIsDelivered(orderId, true);
+                                });
+                              },
+                              onFinish: () async {}),
+                        ),
+                ],
+              )),
+        ),
       ),
     );
   }
