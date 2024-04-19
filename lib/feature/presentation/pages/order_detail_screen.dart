@@ -76,56 +76,302 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
             icon: const Icon(Icons.exit_to_app_outlined)),
         backgroundColor: const Color(0xFFFAF7F5),
       ),
-      body: Container(
-        color: const Color(0xFFFAF7F5),
-        child: Padding(
-          padding:
-              const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 20),
-          child: Container(
-            color: const Color(0xFFFAF7F5),
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height,
-            ),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x19000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 4),
-                          spreadRadius: 0,
-                        ),
-                      ]),
-                  child: SizedBox(
-                    height: 250,
-                    child: BlocBuilder<LocationCubit, LocationState>(
-                      builder: (context, state) {
-                        if (state is GetLocationSuccessState) {
-                          return GoogleMap(
-                            initialCameraPosition: CameraPosition(
-                                target: LatLng(
-                                    state.position.locations[0].latitude,
-                                    state.position.locations[0].longitude),
-                                zoom: 15.5),
-                            markers: {
-                              Marker(
-                                  markerId: const MarkerId('phone'),
-                                  icon: home,
-                                  position: LatLng(
-                                      state.position.phone.latitude,
-                                      state.position.phone.longitude)),
-                              Marker(
-                                  markerId: const MarkerId('order'),
-                                  icon: address,
-                                  position: LatLng(
+      body: SingleChildScrollView(
+        child: Container(
+          color: const Color(0xFFFAF7F5),
+          child: Padding(
+            padding:
+                const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 20),
+            child: Container(
+              color: const Color(0xFFFAF7F5),
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height,
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x19000000),
+                            blurRadius: 4,
+                            offset: Offset(0, 4),
+                            spreadRadius: 0,
+                          ),
+                        ]),
+                    child: SizedBox(
+                      height: 250,
+                      child: BlocBuilder<LocationCubit, LocationState>(
+                        builder: (context, state) {
+                          if (state is GetLocationSuccessState) {
+                            return GoogleMap(
+                              initialCameraPosition: CameraPosition(
+                                  target: LatLng(
                                       state.position.locations[0].latitude,
-                                      state.position.locations[0].longitude)),
-                            },
-                          );
-                        } else if (state is GetLocationFailState) {
+                                      state.position.locations[0].longitude),
+                                  zoom: 15.5),
+                              markers: {
+                                Marker(
+                                    markerId: const MarkerId('phone'),
+                                    icon: home,
+                                    position: LatLng(
+                                        state.position.phone.latitude,
+                                        state.position.phone.longitude)),
+                                Marker(
+                                    markerId: const MarkerId('order'),
+                                    icon: address,
+                                    position: LatLng(
+                                        state.position.locations[0].latitude,
+                                        state.position.locations[0].longitude)),
+                              },
+                            );
+                          } else if (state is GetLocationFailState) {
+                            return Center(
+                              child: Text(state.message),
+                            );
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator.adaptive(),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          order.address,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w400,
+                            height: 0,
+                            letterSpacing: 0.18,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: const Color(0xFFEFEBE8),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x19000000),
+                              blurRadius: 4,
+                              offset: Offset(0, 4),
+                              spreadRadius: 0,
+                            ),
+                          ]),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            BlocBuilder<LocationCubit, LocationState>(
+                              builder: (context, state) {
+                                if (state is GetLocationSuccessState) {
+                                  return Column(
+                                    children: [
+                                      IconButton(
+                                        iconSize: 30,
+                                        onPressed: () {
+                                          launchGoogleMapsNavigation(
+                                              state.position.phone.latitude,
+                                              state.position.phone.longitude,
+                                              state.position.locations[0]
+                                                  .latitude,
+                                              state.position.locations[0]
+                                                  .longitude);
+                                        },
+                                        icon: const Icon(Icons.map_sharp),
+                                        color: Colors.black,
+                                      ),
+                                      const Text(
+                                        'Маршрут',
+                                        style: TextStyle(
+                                          color: Color(0xFF222222),
+                                          fontSize: 14,
+                                          fontFamily: 'Nunito',
+                                          fontWeight: FontWeight.w400,
+                                          height: 0,
+                                          letterSpacing: 0.14,
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                } else if (state is GetLocationFailState) {
+                                  return Center(
+                                    child: IconButton(
+                                      iconSize: 30,
+                                      onPressed: () {},
+                                      icon: const Icon(Icons.map_sharp),
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  );
+                                } else {
+                                  return Center(
+                                    child: IconButton(
+                                      iconSize: 30,
+                                      onPressed: () {},
+                                      icon: const Icon(Icons.map_sharp),
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                            const VerticalDivider(),
+                            Column(
+                              children: [
+                                IconButton(
+                                  iconSize: 30,
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.phone_in_talk_rounded),
+                                  color: Colors.black,
+                                ),
+                                const Text(
+                                  'Имя заказчика',
+                                  style: TextStyle(
+                                    color: Color(0xFF222222),
+                                    fontSize: 14,
+                                    fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
+                                    letterSpacing: 0.14,
+                                  ),
+                                )
+                              ],
+                            ),
+                            const VerticalDivider(),
+                            Column(
+                              children: [
+                                IconButton(
+                                  iconSize: 30,
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.phone),
+                                  color: Colors.black,
+                                ),
+                                const Text(
+                                  'Оператор',
+                                  style: TextStyle(
+                                    color: Color(0xFF222222),
+                                    fontSize: 14,
+                                    fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
+                                    letterSpacing: 0.14,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 20.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          'Способ  оплаты',
+                          style: TextStyle(
+                            color: Color(0xFF222222),
+                            fontSize: 18,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w600,
+                            height: 0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFAF7F5),
+                        shape: BoxShape.rectangle,
+                        border: Border.all(color: const Color(0xFFC9C1B9)),
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 10,
+                          left: 10,
+                          right: 10,
+                          bottom: 10,
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/statistics');
+                          },
+                          child: Row(
+                            // crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              const SizedBox.square(
+                                dimension: 10,
+                              ),
+                              Image.asset('assets/Wallet.png'),
+                              const SizedBox.square(
+                                dimension: 10,
+                              ),
+                              const Text('Яндекс чек',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.w500,
+                                    height: 0,
+                                  )),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          'Состав заказа',
+                          style: TextStyle(
+                            color: Color(0xFF222222),
+                            fontSize: 18,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w600,
+                            height: 0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: BlocBuilder<ItemCubit, ItemState>(
+                      builder: (context, state) {
+                        if (state is GetOrderItemsSuccessState) {
+                          return ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: state.items.length,
+                              itemBuilder: (ctx, index) => OrderItemsList(
+                                  itemModel: state.items[index]));
+                        } else if (state is GetOrderItemsFailState) {
                           return Center(
                             child: Text(state.message),
                           );
@@ -137,252 +383,57 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                       },
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        order.address,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w400,
-                          height: 0,
-                          letterSpacing: 0.18,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: const Color(0xFFEFEBE8),
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x19000000),
-                            blurRadius: 4,
-                            offset: Offset(0, 4),
-                            spreadRadius: 0,
-                          ),
-                        ]),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          BlocBuilder<LocationCubit, LocationState>(
-                            builder: (context, state) {
-                              if (state is GetLocationSuccessState) {
-                                return Column(
-                                  children: [
-                                    IconButton(
-                                      iconSize: 30,
-                                      onPressed: () {
-                                        launchGoogleMapsNavigation(
-                                            state.position.phone.latitude,
-                                            state.position.phone.longitude,
-                                            state
-                                                .position.locations[0].latitude,
-                                            state.position.locations[0]
-                                                .longitude);
-                                      },
-                                      icon: const Icon(Icons.map_sharp),
-                                      color: Colors.black,
-                                    ),
-                                    const Text(
-                                      'Маршрут',
-                                      style: TextStyle(
-                                        color: Color(0xFF222222),
-                                        fontSize: 14,
-                                        fontFamily: 'Nunito',
-                                        fontWeight: FontWeight.w400,
-                                        height: 0,
-                                        letterSpacing: 0.14,
-                                      ),
-                                    )
-                                  ],
-                                );
-                              } else if (state is GetLocationFailState) {
-                                return Center(
-                                  child: IconButton(
-                                    iconSize: 30,
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.map_sharp),
-                                    color: Colors.grey.shade600,
-                                  ),
-                                );
-                              } else {
-                                return Center(
-                                  child: IconButton(
-                                    iconSize: 30,
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.map_sharp),
-                                    color: Colors.grey.shade600,
-                                  ),
-                                );
-                              }
-                            },
-                          ),
-                          const VerticalDivider(),
-                          Column(
-                            children: [
-                              IconButton(
-                                iconSize: 30,
-                                onPressed: () {},
-                                icon: const Icon(Icons.phone_in_talk_rounded),
-                                color: Colors.black,
-                              ),
-                              const Text(
-                                'Имя заказчика',
-                                style: TextStyle(
-                                  color: Color(0xFF222222),
-                                  fontSize: 14,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                  letterSpacing: 0.14,
-                                ),
-                              )
-                            ],
-                          ),
-                          const VerticalDivider(),
-                          Column(
-                            children: [
-                              IconButton(
-                                iconSize: 30,
-                                onPressed: () {},
-                                icon: const Icon(Icons.phone),
-                                color: Colors.black,
-                              ),
-                              const Text(
-                                'Оператор',
-                                style: TextStyle(
-                                  color: Color(0xFF222222),
-                                  fontSize: 14,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                  letterSpacing: 0.14,
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        'Состав заказа',
-                        style: TextStyle(
-                          color: Color(0xFF222222),
-                          fontSize: 18,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w600,
-                          height: 0,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: BlocBuilder<ItemCubit, ItemState>(
+                  const Divider(color: Color(0xFFAFA8A1)),
+                  BlocBuilder<OrdersCostCubit, OrdersCostState>(
                     builder: (context, state) {
-                      if (state is GetOrderItemsSuccessState) {
-                        return ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: state.items.length,
-                            itemBuilder: (ctx, index) =>
-                                OrderItemsList(itemModel: state.items[index]));
-                      } else if (state is GetOrderItemsFailState) {
-                        return Center(
-                          child: Text(state.message),
+                      if (state is OrdersCostSuccess) {
+                        return Text(
+                          "Итоговая стоимость ${state.costs[orderId]!.toStringAsFixed(2)} ₽ ",
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w400,
+                          ),
                         );
+                      } else if (state is OrdersCostFailure) {
+                        return Text(state.message);
                       } else {
-                        return const Center(
-                          child: CircularProgressIndicator.adaptive(),
-                        );
+                        return const Text('Loading...');
                       }
                     },
                   ),
-                ),
-                BlocBuilder<OrdersCostCubit, OrdersCostState>(
-                  builder: (context, state) {
-                    if (state is OrdersCostSuccess) {
-                      return Text(
-                        "Итоговая стоимость ${state.costs[orderId]!.toStringAsFixed(2)} ₽ ",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      );
-                    } else if (state is OrdersCostFailure) {
-                      return Text(state.message);
-                    } else {
-                      return const Text('Loading...');
-                    }
-                  },
-                ),
-                BlocBuilder<OrdersCostCubit, OrdersCostState>(
-                  builder: (context, state) {
-                    if (state is OrdersCostSuccess) {
-                      return Text(
-                        "Процент курьера ${state.costsForRecent[orderId]!.toStringAsFixed(2)} ₽ (40%)",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      );
-                    } else if (state is OrdersCostFailure) {
-                      return Text(state.message);
-                    } else {
-                      return const Text('Loading...');
-                    }
-                  },
-                ),
-                isDelivered
-                    ? ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(60),
-                          foregroundColor: Colors.black,
-                          backgroundColor: Colors.black,
-                          surfaceTintColor: Colors.black,
-                        ),
-                        onPressed: () {},
-                        child: const Text(
-                          'Заказ доставлен',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
+                  BlocBuilder<OrdersCostCubit, OrdersCostState>(
+                    builder: (context, state) {
+                      if (state is OrdersCostSuccess) {
+                        return Text(
+                          "Процент курьера ${state.costsForRecent[orderId]!.toStringAsFixed(2)} ₽ (40%)",
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
                             fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w600,
-                            height: 0.07,
-                            letterSpacing: 0.09,
+                            fontWeight: FontWeight.w400,
                           ),
-                        ),
-                      )
-                    : Align(
-                        alignment: Alignment.bottomLeft,
-                        child: SwipeableButtonView(
-                            buttonText: "Доставлен",
-                            buttontextstyle: const TextStyle(
+                        );
+                      } else if (state is OrdersCostFailure) {
+                        return Text(state.message);
+                      } else {
+                        return const Text('Loading...');
+                      }
+                    },
+                  ),
+                  isDelivered
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(60),
+                            foregroundColor: Colors.black,
+                            backgroundColor: Colors.black,
+                            surfaceTintColor: Colors.black,
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            'Заказ доставлен',
+                            style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
                               fontFamily: 'Nunito',
@@ -390,43 +441,65 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                               height: 0.07,
                               letterSpacing: 0.09,
                             ),
-                            buttonWidget: Container(
-                              child: const Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                color: Colors.grey,
+                          ),
+                        )
+                      : Align(
+                          alignment: Alignment.bottomLeft,
+                          child: SwipeableButtonView(
+                              buttonText: "Доставлен",
+                              buttontextstyle: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w600,
+                                height: 0.07,
+                                letterSpacing: 0.09,
                               ),
-                            ),
-                            activeColor: const Color(0xFF78C4A4),
-                            isFinished: isFinished,
-                            onWaitingProcess: () {
-                              Future.delayed(Duration(seconds: 2), () {
-                                context
-                                    .read<SetDeliveredCubit>()
-                                    .setOrderIsDelivered(orderId, true);
-                              });
-                            },
-                            onFinish: () async {}),
-                      ),
-                BlocListener<SetDeliveredCubit, SetDeliveredState>(
-                  listener: (context, state) {
-                    if (state is SetDeliveredLoaded) {
-                      print('orderId $orderId, \n isdelivered true');
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, "/orders");
-                    } else if (state is SetDeliveredError) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Ошибка!'),
-                          backgroundColor: Colors.redAccent,
+                              buttonWidget: Container(
+                                child: const Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              activeColor: const Color(0xFF78C4A4),
+                              isFinished: isFinished,
+                              onWaitingProcess: () {
+                                Future.delayed(Duration(seconds: 2), () {
+                                  context
+                                      .read<SetDeliveredCubit>()
+                                      .setOrderIsDelivered(orderId, true);
+                                });
+                              },
+                              onFinish: () async {}),
                         ),
-                      );
-                    }
-                  },
-                  child: const SizedBox(),
-                ),
-              ],
+                  BlocListener<SetDeliveredCubit, SetDeliveredState>(
+                    listener: (context, state) {
+                      if (state is SetDeliveredLoaded) {
+                        print('orderId $orderId, \n isdelivered true');
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, "/orders");
+                      } else if (state is SetDeliveredError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Ошибка!'),
+                            backgroundColor: Colors.redAccent,
+                          ),
+                        );
+                      }
+                    },
+                    child: const SizedBox(),
+                  ),
+                ],
+              ),
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(20),
+        child: Container(
+          height: 60,
+          color: Colors.amber,
         ),
       ),
     );
