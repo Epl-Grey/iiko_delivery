@@ -325,7 +325,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                               const SizedBox.square(
                                 dimension: 10,
                               ),
-                              Image.asset('assets/Wallet.png'),
+                              Image.asset('assets/ticket.png'),
                               const SizedBox.square(
                                 dimension: 10,
                               ),

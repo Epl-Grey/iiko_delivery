@@ -81,6 +81,9 @@ flutter:
    - assets/backSallary.png
    - assets/Regular.png
    - assets/home.png
+   - assets/ticket.png
+   - assets/last.png
+
 
   fonts:
     - family: Nunito
