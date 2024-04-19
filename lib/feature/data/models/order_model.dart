@@ -10,6 +10,7 @@ class OrderModel extends OrderEntity {
     required super.clientName,
     required super.orderDate,
     required super.neadToCall,
+    required super.paymentMethod,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> map) {
@@ -22,6 +23,7 @@ class OrderModel extends OrderEntity {
       clientName: map['client_name'] as String,
       orderDate: DateTime.parse(map['order_date'] as String),
       neadToCall: map['nead_to_call'] as bool,
+      paymentMethod: map['payment_method'] as String,
     );
   }
 
@@ -35,6 +37,7 @@ class OrderModel extends OrderEntity {
       'clientName': clientName,
       'orderDate': orderDate.toIso8601String(),
       'neadToCall': neadToCall,
+      'paymentMethod': paymentMethod,
     };
   }
 }

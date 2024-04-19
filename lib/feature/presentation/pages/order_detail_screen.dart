@@ -58,6 +58,9 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        shadowColor: Colors.white,
+
+        surfaceTintColor: Colors.white,
         title: Text(
           "Номер заказа | $orderId",
           style: const TextStyle(
@@ -329,8 +332,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                               const SizedBox.square(
                                 dimension: 10,
                               ),
-                              const Text('Яндекс чек',
-                                  style: TextStyle(
+                              Text(order.paymentMethod,
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
                                     fontFamily: 'Nunito',
@@ -383,95 +386,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                       },
                     ),
                   ),
-                  const Divider(color: Color(0xFFAFA8A1)),
-                  BlocBuilder<OrdersCostCubit, OrdersCostState>(
-                    builder: (context, state) {
-                      if (state is OrdersCostSuccess) {
-                        return Text(
-                          "Итоговая стоимость ${state.costs[orderId]!.toStringAsFixed(2)} ₽ ",
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        );
-                      } else if (state is OrdersCostFailure) {
-                        return Text(state.message);
-                      } else {
-                        return const Text('Loading...');
-                      }
-                    },
-                  ),
-                  BlocBuilder<OrdersCostCubit, OrdersCostState>(
-                    builder: (context, state) {
-                      if (state is OrdersCostSuccess) {
-                        return Text(
-                          "Процент курьера ${state.costsForRecent[orderId]!.toStringAsFixed(2)} ₽ (40%)",
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        );
-                      } else if (state is OrdersCostFailure) {
-                        return Text(state.message);
-                      } else {
-                        return const Text('Loading...');
-                      }
-                    },
-                  ),
-                  isDelivered
-                      ? ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size.fromHeight(60),
-                            foregroundColor: Colors.black,
-                            backgroundColor: Colors.black,
-                            surfaceTintColor: Colors.black,
-                          ),
-                          onPressed: () {},
-                          child: const Text(
-                            'Заказ доставлен',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontFamily: 'Nunito',
-                              fontWeight: FontWeight.w600,
-                              height: 0.07,
-                              letterSpacing: 0.09,
-                            ),
-                          ),
-                        )
-                      : Align(
-                          alignment: Alignment.bottomLeft,
-                          child: SwipeableButtonView(
-                              buttonText: "Доставлен",
-                              buttontextstyle: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontFamily: 'Nunito',
-                                fontWeight: FontWeight.w600,
-                                height: 0.07,
-                                letterSpacing: 0.09,
-                              ),
-                              buttonWidget: Container(
-                                child: const Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              activeColor: const Color(0xFF78C4A4),
-                              isFinished: isFinished,
-                              onWaitingProcess: () {
-                                Future.delayed(Duration(seconds: 2), () {
-                                  context
-                                      .read<SetDeliveredCubit>()
-                                      .setOrderIsDelivered(orderId, true);
-                                });
-                              },
-                              onFinish: () async {}),
-                        ),
                   BlocListener<SetDeliveredCubit, SetDeliveredState>(
                     listener: (context, state) {
                       if (state is SetDeliveredLoaded) {
@@ -498,9 +412,100 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(20),
         child: Container(
-          height: 60,
-          color: Colors.amber,
-        ),
+            height: 125,
+            child: Column(
+              children: <Widget>[
+                const Divider(color: Color(0xFFAFA8A1)),
+                BlocBuilder<OrdersCostCubit, OrdersCostState>(
+                  builder: (context, state) {
+                    if (state is OrdersCostSuccess) {
+                      return Text(
+                        "Итоговая стоимость ${state.costs[orderId]!.toStringAsFixed(2)} ₽ ",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      );
+                    } else if (state is OrdersCostFailure) {
+                      return Text(state.message);
+                    } else {
+                      return const Text('Loading...');
+                    }
+                  },
+                ),
+                BlocBuilder<OrdersCostCubit, OrdersCostState>(
+                  builder: (context, state) {
+                    if (state is OrdersCostSuccess) {
+                      return Text(
+                        "Процент курьера ${state.costsForRecent[orderId]!.toStringAsFixed(2)} ₽ (40%)",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      );
+                    } else if (state is OrdersCostFailure) {
+                      return Text(state.message);
+                    } else {
+                      return const Text('Loading...');
+                    }
+                  },
+                ),
+                isDelivered
+                    ? ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(60),
+                          foregroundColor: Colors.black,
+                          backgroundColor: Colors.black,
+                          surfaceTintColor: Colors.black,
+                        ),
+                        onPressed: () {},
+                        child: const Text(
+                          'Заказ доставлен',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w600,
+                            height: 0.07,
+                            letterSpacing: 0.09,
+                          ),
+                        ),
+                      )
+                    : Align(
+                        alignment: Alignment.bottomLeft,
+                        child: SwipeableButtonView(
+                            buttonText: "Доставлен",
+                            buttontextstyle: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w600,
+                              height: 0.07,
+                              letterSpacing: 0.09,
+                            ),
+                            buttonWidget: Container(
+                              child: const Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            activeColor: const Color(0xFF78C4A4),
+                            isFinished: isFinished,
+                            onWaitingProcess: () {
+                              Future.delayed(Duration(seconds: 2), () {
+                                context
+                                    .read<SetDeliveredCubit>()
+                                    .setOrderIsDelivered(orderId, true);
+                              });
+                            },
+                            onFinish: () async {}),
+                      ),
+              ],
+            )),
       ),
     );
   }
