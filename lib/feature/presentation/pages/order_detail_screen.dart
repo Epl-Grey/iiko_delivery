@@ -14,6 +14,7 @@ import 'package:beFit_Del/feature/presentation/bloc/set_delivered_cubit/set_deli
 import 'package:beFit_Del/feature/presentation/widgets/item_list_widget.dart';
 import 'package:swipeable_button_view/swipeable_button_view.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:geolocator/geolocator.dart';
 
 class OrderDetailPage extends StatefulWidget {
   const OrderDetailPage({super.key});
@@ -40,6 +41,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
         .then((icon) => address = icon);
     BitmapDescriptor.fromAssetImage(ImageConfiguration.empty, "assets/home.png")
         .then((icon) => home = icon);
+
+    List<double> locationList = [];
 
     void launchGoogleMapsNavigation(double startLat, double startLong,
         double destinationLat, double destinationLong) async {
@@ -237,7 +240,18 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                               children: [
                                 IconButton(
                                   iconSize: 30,
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    String telephoneNumber = order.clientPhone;
+                                    String telephoneUrl =
+                                        "tel:$telephoneNumber";
+                                    // ignore: deprecated_member_use
+                                    if (await canLaunch(telephoneUrl)) {
+                                      // ignore: deprecated_member_use
+                                      await launch(telephoneUrl);
+                                    } else {
+                                      throw "Error occured trying to call that number.";
+                                    }
+                                  },
                                   icon: const Icon(Icons.phone_in_talk_rounded),
                                   color: Colors.black,
                                 ),
@@ -259,7 +273,18 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                               children: [
                                 IconButton(
                                   iconSize: 30,
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    String telephoneNumber = '+2347012345678';
+                                    String telephoneUrl =
+                                        "tel:$telephoneNumber";
+                                    // ignore: deprecated_member_use
+                                    if (await canLaunch(telephoneUrl)) {
+                                      // ignore: deprecated_member_use
+                                      await launch(telephoneUrl);
+                                    } else {
+                                      throw "Error occured trying to call that number.";
+                                    }
+                                  },
                                   icon: const Icon(Icons.phone),
                                   color: Colors.black,
                                 ),
@@ -316,9 +341,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                           bottom: 10,
                         ),
                         child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/statistics');
-                          },
                           child: Row(
                             // crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisSize: MainAxisSize.max,
@@ -384,23 +406,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                             );
                           }
                         },
-                      ),
-                      BlocListener<SetDeliveredCubit, SetDeliveredState>(
-                        listener: (context, state) {
-                          if (state is SetDeliveredLoaded) {
-                            print('orderId $orderId, \n isdelivered true');
-                            Navigator.pop(context);
-                            Navigator.pushNamed(context, "/orders");
-                          } else if (state is SetDeliveredError) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Ошибка!'),
-                                backgroundColor: Colors.redAccent,
-                              ),
-                            );
-                          }
-                        },
-                        child: const SizedBox(),
                       ),
                     ],
                   ),
@@ -549,13 +554,66 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                               isFinished: isFinished,
                               onWaitingProcess: () {
                                 Future.delayed(Duration(seconds: 2), () {
-                                  context
-                                      .read<SetDeliveredCubit>()
-                                      .setOrderIsDelivered(orderId, true);
+                                  final double radius = 150; // Радиус в метрах
+                                  final distance = Geolocator.distanceBetween(
+                                      locationList[0],
+                                      locationList[1],
+                                      locationList[2],
+                                      locationList[3]);
+                                  if (distance <= radius) {
+                                    context
+                                        .read<SetDeliveredCubit>()
+                                        .setOrderIsDelivered(orderId, true);
+                                  } else {
+                                    isFinished = false;
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content:
+                                            Text('Вы не в радиусе заказа!'),
+                                        backgroundColor: Colors.redAccent,
+                                      ),
+                                    );
+                                  }
                                 });
                               },
                               onFinish: () async {}),
                         ),
+                  BlocListener<SetDeliveredCubit, SetDeliveredState>(
+                    listener: (context, state) {
+                      if (state is SetDeliveredLoaded) {
+                        print('orderId $orderId, \n isdelivered true');
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, "/orders");
+                      } else if (state is SetDeliveredError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Ошибка!'),
+                            backgroundColor: Colors.redAccent,
+                          ),
+                        );
+                      }
+                    },
+                    child: const SizedBox(),
+                  ),
+                  BlocListener<LocationCubit, LocationState>(
+                    listener: (context, state) {
+                      if (state is GetLocationSuccessState) {
+                        locationList.add(state.position.locations[0].latitude);
+                        locationList.add(state.position.locations[0].longitude);
+                        locationList.add(state.position.phone.latitude);
+                        locationList.add(state.position.phone.longitude);
+                        print('${locationList[0]}');
+                      } else if (state is GetLocationFailState) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Ошибка загрузка геолокации'),
+                            backgroundColor: Colors.redAccent,
+                          ),
+                        );
+                      }
+                    },
+                    child: const SizedBox(),
+                  ),
                 ],
               )),
         ),

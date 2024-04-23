@@ -7,7 +7,8 @@ abstract class OrderRemoteDataSource {
   Future<List<OrderModel>> getUserOrdersByDateRange(
       DateTime start, DateTime end,
       {bool? isDelivered});
-  RealtimeChannel listenToUserOrdersChanges(String channel, void Function() callback);
+  RealtimeChannel listenToUserOrdersChanges(
+      String channel, void Function() callback);
 }
 
 class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
@@ -52,10 +53,9 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
 
   @override
   Future<void> setOrderIsDelivered(int id, bool isDelivered) async {
-  
     final List<Map<String, dynamic>> data = await supabaseClient
         .from("Orders")
-        .update({'is_delivered': isDelivered, 'delivery_date': DateTime.now()})
+        .update({'is_delivered': isDelivered})
         .eq('order_number', id)
         .select();
     print('data --> $data');
