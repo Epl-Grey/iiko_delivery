@@ -222,6 +222,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.17"
+  flutter_swipe_button:
+    dependency: "direct main"
+    description:
+      name: flutter_swipe_button
+      sha256: eaddf7bf536bf099f0bcf05bfa861a9ab5b7fb3e9fbfdf48c13180bdc2500ec9
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1+1"
   flutter_test:
     dependency: "direct dev"
     description: flutter

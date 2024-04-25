@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_swipe_button/flutter_swipe_button.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:beFit_Del/feature/domain/entities/order_entity.dart';
 import 'package:beFit_Del/feature/presentation/bloc/item_cubit/item_cubit.dart';
@@ -33,7 +34,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
     context.read<ItemCubit>().getOrderItems(order.id);
     context.read<LocationCubit>().getPhoneLocation(order.address);
     context.read<OrdersCostCubit>().getOrdersCost(isDelivered);
-
+    var key = '1';
     BitmapDescriptor address = BitmapDescriptor.defaultMarker;
     BitmapDescriptor home = BitmapDescriptor.defaultMarker;
     BitmapDescriptor.fromAssetImage(
@@ -505,7 +506,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       bottomNavigationBar: Container(
         color: Color(0xFFFAF7F5),
         child: Padding(
-          padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          padding: EdgeInsets.only(left: 10, right: 10, bottom: 20),
           child: Container(
               color: Color(0xFFFAF7F5),
               height: 60,
@@ -534,9 +535,19 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                         )
                       : Align(
                           alignment: Alignment.bottomLeft,
-                          child: SwipeableButtonView(
-                              buttonText: "Доставлен",
-                              buttontextstyle: const TextStyle(
+                          child: SwipeButton(
+                            height: 60,
+                            elevationThumb: 2,
+                            activeTrackColor: const Color(0xFF78C4A4),
+                            activeThumbColor: Colors.white,
+                            thumbPadding: EdgeInsets.all(8.0),
+                            thumb: const Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Colors.grey,
+                            ),
+                            child: const Text(
+                              "Доставлен",
+                              style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
                                 fontFamily: 'Nunito',
@@ -544,40 +555,29 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                                 height: 0.07,
                                 letterSpacing: 0.09,
                               ),
-                              buttonWidget: Container(
-                                child: const Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              activeColor: const Color(0xFF78C4A4),
-                              isFinished: isFinished,
-                              onWaitingProcess: () {
-                                Future.delayed(Duration(seconds: 2), () {
-                                  final double radius = 150; // Радиус в метрах
-                                  final distance = Geolocator.distanceBetween(
-                                      locationList[0],
-                                      locationList[1],
-                                      locationList[2],
-                                      locationList[3]);
-                                  if (distance <= radius) {
-                                    context
-                                        .read<SetDeliveredCubit>()
-                                        .setOrderIsDelivered(orderId, true);
-                                  } else {
-                                    isFinished = false;
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content:
-                                            Text('Вы не в радиусе заказа!'),
-                                        backgroundColor: Colors.redAccent,
-                                      ),
-                                    );
-                                  }
-                                });
-                              },
-                              onFinish: () async {}),
-                        ),
+                            ),
+                            onSwipe: () {
+                              final double radius = 150; // Радиус в метрах
+                              final distance = Geolocator.distanceBetween(
+                                  locationList[0],
+                                  locationList[1],
+                                  locationList[2],
+                                  locationList[3]);
+                              if (distance <= radius) {
+                                context
+                                    .read<SetDeliveredCubit>()
+                                    .setOrderIsDelivered(orderId, true);
+                              } else {
+                                isFinished = false;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Вы не в радиусе заказа!'),
+                                    backgroundColor: Colors.redAccent,
+                                  ),
+                                );
+                              }
+                            },
+                          )),
                   BlocListener<SetDeliveredCubit, SetDeliveredState>(
                     listener: (context, state) {
                       if (state is SetDeliveredLoaded) {
