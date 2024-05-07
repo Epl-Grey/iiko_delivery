@@ -9,6 +9,7 @@ class OrderModel extends OrderEntity {
     required super.clientPhone,
     required super.clientName,
     required super.orderDate,
+    super.deliverdDate,
     required super.neadToCall,
     required super.paymentMethod,
   });
@@ -22,6 +23,9 @@ class OrderModel extends OrderEntity {
       clientPhone: map['client_phone'] as String,
       clientName: map['client_name'] as String,
       orderDate: DateTime.parse(map['order_date'] as String),
+      deliverdDate: map['date_delivered'] == null
+          ? null
+          : DateTime.parse(map['date_delivered'] as String),
       neadToCall: map['nead_to_call'] as bool,
       paymentMethod: map['payment_method'] as String,
     );
@@ -36,6 +40,7 @@ class OrderModel extends OrderEntity {
       'clientPhone': clientPhone,
       'clientName': clientName,
       'orderDate': orderDate.toIso8601String(),
+      'deliverdDate': deliverdDate!.toIso8601String(),
       'neadToCall': neadToCall,
       'paymentMethod': paymentMethod,
     };

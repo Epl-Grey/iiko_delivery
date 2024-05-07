@@ -8,6 +8,7 @@ class OrderEntity extends Equatable {
   final String clientPhone;
   final String clientName;
   final DateTime orderDate;
+  final DateTime? deliverdDate;
   final bool neadToCall;
   final String paymentMethod;
 
@@ -19,6 +20,7 @@ class OrderEntity extends Equatable {
     required this.clientPhone,
     required this.clientName,
     required this.orderDate,
+    this.deliverdDate,
     required this.neadToCall,
     required this.paymentMethod,
   });
@@ -32,6 +34,7 @@ class OrderEntity extends Equatable {
         clientPhone,
         clientName,
         orderDate,
+        deliverdDate,
         neadToCall,
         paymentMethod,
       ];

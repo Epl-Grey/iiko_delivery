@@ -55,7 +55,10 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
   Future<void> setOrderIsDelivered(int id, bool isDelivered) async {
     final List<Map<String, dynamic>> data = await supabaseClient
         .from("Orders")
-        .update({'is_delivered': isDelivered})
+        .update({
+          'is_delivered': isDelivered,
+          'date_delivered': DateTime.now().toIso8601String()
+        })
         .eq('order_number', id)
         .select();
     print('data --> $data');
@@ -79,8 +82,8 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
       data = await supabaseClient
           .from('Orders')
           .select()
-          .gte('order_date', start)
-          .lt('order_date', end)
+          .gte('date_delivered', start)
+          .lt('date_delivered', end)
           .eq('is_delivered', isDelivered)
           .order('order_date', ascending: true);
     }

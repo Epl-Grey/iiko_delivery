@@ -13,7 +13,6 @@ import 'package:beFit_Del/feature/presentation/bloc/orders_cost_cubit/orders_cos
 import 'package:beFit_Del/feature/presentation/bloc/set_delivered_cubit/set_delivered_cubit.dart';
 import 'package:beFit_Del/feature/presentation/bloc/set_delivered_cubit/set_delivered_state.dart';
 import 'package:beFit_Del/feature/presentation/widgets/item_list_widget.dart';
-import 'package:swipeable_button_view/swipeable_button_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -34,7 +33,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
     context.read<ItemCubit>().getOrderItems(order.id);
     context.read<LocationCubit>().getPhoneLocation(order.address);
     context.read<OrdersCostCubit>().getOrdersCost(isDelivered);
-    var key = '1';
     BitmapDescriptor address = BitmapDescriptor.defaultMarker;
     BitmapDescriptor home = BitmapDescriptor.defaultMarker;
     BitmapDescriptor.fromAssetImage(
