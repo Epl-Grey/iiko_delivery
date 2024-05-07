@@ -1,13 +1,18 @@
 import 'package:decimal/decimal.dart';
-import 'package:beFit_Del/feature/domain/entities/item_entity.dart';
 
-class ItemModel extends ItemEntity {
+class ItemModel {
+  final int id;
+  final int orderId;
+  final String name;
+  final int count;
+  final Decimal cost;
+
   const ItemModel({
-    required super.id,
-    required super.orderId,
-    required super.name,
-    required super.count,
-    required super.cost,
+    required this.id,
+    required this.orderId,
+    required this.name,
+    required this.count,
+    required this.cost,
   });
 
   factory ItemModel.fromJson(Map<String, dynamic> map) {

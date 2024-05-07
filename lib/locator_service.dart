@@ -57,7 +57,7 @@ Future<void> init() async {
   sl.registerFactory<SignOutUserCubit>(() => sl());
   // UseCases
   sl.registerLazySingleton<GetUserOrders>(
-      () => GetUserOrders(orderRepository: sl()));
+      () => GetUserOrders(orderRepository: sl(), itemRepository: sl()));
   sl.registerLazySingleton<SignInUser>(() => SignInUser(userRepository: sl()));
   sl.registerLazySingleton<GetOrderItems>(
       () => GetOrderItems(orderRepository: sl()));
