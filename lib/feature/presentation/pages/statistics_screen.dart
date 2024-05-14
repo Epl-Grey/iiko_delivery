@@ -158,7 +158,10 @@ class _StatisticaPageState extends State<StatisticaPage> {
                         );
                       } else {
                         return const Center(
-                          child: CircularProgressIndicator.adaptive(),
+                          child: CircularProgressIndicator.adaptive(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Color(0xFF78C4A4)),
+                          ),
                         );
                       }
                     },
